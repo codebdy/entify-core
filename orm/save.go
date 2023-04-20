@@ -8,15 +8,20 @@ import (
 	"github.com/codebdy/entify/model/data"
 )
 
-func (s *Session) SaveOne(instance *data.Instance) (uint64, error) {
+func (s *Session) SaveOne(entityName string, object map[string]interface{}) (uint64, error) {
+	instance := data.NewInstance(object, s.model.Graph.GetEntityByName(entityName))
+	return s.saveOneInstance(instance)
+}
+
+func (s *Session) saveOneInstance(instance *data.Instance) (uint64, error) {
 	if instance.IsInsert() {
-		return s.InsertOne(instance)
+		return s.insertOne(instance)
 	} else {
-		return s.UpdateOne(instance)
+		return s.updateOne(instance)
 	}
 }
 
-func (s *Session) InsertOne(instance *data.Instance) (uint64, error) {
+func (s *Session) insertOne(instance *data.Instance) (uint64, error) {
 	id, err := s.insertOneBody(instance)
 
 	if err != nil {
@@ -57,9 +62,9 @@ func (s *Session) insertOneBody(instance *data.Instance) (int64, error) {
 	return id, nil
 }
 
-func (s *Session) UpdateOne(instance *data.Instance) (uint64, error) {
+func (s *Session) updateOne(instance *data.Instance) (uint64, error) {
 
-	instanceForUpdate := s.QueryOneById(instance.Entity, instance.Id)
+	instanceForUpdate := s.QueryOneById(instance.Entity.Name(), instance.Id)
 	if instanceForUpdate == nil {
 		log.Panic(fmt.Sprintf("Update instance is not exist, entity: %s, instanceId:%d", instance.Entity.Name(), instance.Id))
 	}
@@ -108,7 +113,7 @@ func newAssociationPovit(r *data.AssociationRef, ownerId uint64, tarId uint64) *
 
 func (s *Session) saveAssociationInstance(ins *data.Instance) (uint64, error) {
 	if !ins.IsEmperty() {
-		saved, err := s.SaveOne(ins)
+		saved, err := s.saveOneInstance(ins)
 		if err != nil {
 			return 0, err
 		}

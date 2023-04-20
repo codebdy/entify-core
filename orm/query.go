@@ -17,38 +17,7 @@ type QueryResponse struct {
 	Total int                      `json:"total"`
 }
 
-// func (con *Session) buildQueryInterfaceSQL(intf *graph.Interface, args map[string]interface{}) (string, []interface{}) {
-// 	var (
-// 		sqls       []string
-// 		paramsList []interface{}
-// 	)
-// 	builder := dialect.GetSQLBuilder()
-// 	for i := range intf.Children {
-// 		entity := intf.Children[i]
-// 		whereArgs := args[shared.ARG_WHERE]
-// 		argEntity := graph.BuildArgEntity(
-// 			entity,
-// 			whereArgs,
-// 			con,
-// 		)
-// 		queryStr := builder.BuildQuerySQLBody(argEntity, intf.AllAttributes())
-// 		if where, ok := whereArgs.(graph.QueryArg); ok {
-// 			whereSQL, params := builder.BuildWhereSQL(argEntity, intf.AllAttributes(), where)
-// 			if whereSQL != "" {
-// 				queryStr = queryStr + " WHERE " + whereSQL
-// 			}
-
-// 			paramsList = append(paramsList, params...)
-// 		}
-// 		queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[shared.ARG_ORDERBY])
-
-// 		sqls = append(sqls, queryStr)
-// 	}
-
-// 	return strings.Join(sqls, " UNION "), paramsList
-// }
-
-func (con *Session) buildQueryEntitySQL(
+func (s *Session) buildQueryEntitySQL(
 	entity *graph.Entity,
 	args map[string]interface{},
 	whereArgs interface{},
@@ -76,16 +45,16 @@ func (con *Session) buildQueryEntitySQL(
 	return queryStr, paramsList
 }
 
-func (con *Session) buildQueryEntityRecordsSQL(entity *graph.Entity, args map[string]interface{}, attributes []*graph.Attribute) (string, []interface{}) {
+func (s *Session) buildQueryEntityRecordsSQL(entity *graph.Entity, args map[string]interface{}, attributes []*graph.Attribute) (string, []interface{}) {
 	whereArgs := args[shared.ARG_WHERE]
 	argEntity := graph.BuildArgEntity(
 		entity,
 		whereArgs,
-		con,
+		s,
 	)
 	builder := dialect.GetSQLBuilder()
 	queryStr := builder.BuildQuerySQLBody(argEntity, attributes)
-	sqlStr, params := con.buildQueryEntitySQL(entity, args, whereArgs, argEntity, queryStr)
+	sqlStr, params := s.buildQueryEntitySQL(entity, args, whereArgs, argEntity, queryStr)
 
 	if args[shared.ARG_LIMIT] != nil {
 		sqlStr = sqlStr + fmt.Sprintf(" LIMIT %d ", args[shared.ARG_LIMIT])
@@ -97,16 +66,16 @@ func (con *Session) buildQueryEntityRecordsSQL(entity *graph.Entity, args map[st
 	return sqlStr, params
 }
 
-func (con *Session) buildQueryEntityCountSQL(entity *graph.Entity, args map[string]interface{}) (string, []interface{}) {
+func (s *Session) buildQueryEntityCountSQL(entity *graph.Entity, args map[string]interface{}) (string, []interface{}) {
 	whereArgs := args[shared.ARG_WHERE]
 	argEntity := graph.BuildArgEntity(
 		entity,
 		whereArgs,
-		con,
+		s,
 	)
 	builder := dialect.GetSQLBuilder()
 	queryStr := builder.BuildQueryCountSQLBody(argEntity)
-	return con.buildQueryEntitySQL(
+	return s.buildQueryEntitySQL(
 		entity,
 		args,
 		whereArgs,
@@ -115,48 +84,24 @@ func (con *Session) buildQueryEntityCountSQL(entity *graph.Entity, args map[stri
 	)
 }
 
-// func (con *Session) QueryInterface(intf *graph.Interface, args map[string]interface{}) QueryResponse {
-// 	sql, params := con.buildQueryInterfaceSQL(intf, args)
-
-// 	rows, err := con.Dbx.Query(sql, params...)
-// 	defer rows.Close()
-// 	if err != nil {
-// 		panic(err.Error())
-// 	}
-// 	var instances []InsanceData
-// 	for rows.Next() {
-// 		values := makeInterfaceQueryValues(intf)
-// 		err = rows.Scan(values...)
-// 		if err != nil {
-// 			panic(err.Error())
-// 		}
-// 		instances = append(instances, convertValuesToInterface(values, intf))
-// 	}
-
-// 	instancesIds := make([]interface{}, len(instances))
-// 	for i := range instances {
-// 		instancesIds[i] = instances[i][shared.ID]
-// 	}
-
-// 	for i := range intf.Children {
-// 		child := intf.Children[i]
-// 		oneEntityInstances := con.QueryByIds(child, instancesIds)
-// 		merageInstances(instances, oneEntityInstances)
-// 	}
-
-// 	return QueryResponse{
-// 		Nodes: instances,
-// 		Total: 0,
-// 	}
-// }
-
-func (con *Session) Query(entity *graph.Entity, args map[string]interface{}, fields []*graph.Attribute) QueryResponse {
+func (s *Session) Query(entityName string, args map[string]interface{}, fieldNames []string) QueryResponse {
 	var instances []InsanceData
+	entity := s.model.Graph.GetEntityByName(entityName)
+	fields := []*graph.Attribute{}
+	allAttributes := entity.AllAttributes()
+
+	for i := range allAttributes {
+		for _, name := range fieldNames {
+			if allAttributes[i].Name == name {
+				fields = append(fields, allAttributes[i])
+			}
+		}
+	}
 
 	if len(fields) > 0 {
-		sqlStr, params := con.buildQueryEntityRecordsSQL(entity, args, fields)
+		sqlStr, params := s.buildQueryEntityRecordsSQL(entity, args, fields)
 		log.Println("doQueryEntity SQL:", sqlStr, params)
-		rows, err := con.Dbx.Query(sqlStr, params...)
+		rows, err := s.Dbx.Query(sqlStr, params...)
 		defer rows.Close()
 		if err != nil {
 			log.Panic(err.Error(), sqlStr)
@@ -172,10 +117,10 @@ func (con *Session) Query(entity *graph.Entity, args map[string]interface{}, fie
 		}
 	}
 
-	sqlStr, params := con.buildQueryEntityCountSQL(entity, args)
+	sqlStr, params := s.buildQueryEntityCountSQL(entity, args)
 	log.Println("doQueryEntity count SQL:", sqlStr, params)
 	count := 0
-	err := con.Dbx.QueryRow(sqlStr, params...).Scan(&count)
+	err := s.Dbx.QueryRow(sqlStr, params...).Scan(&count)
 	switch {
 	case err == sql.ErrNoRows:
 		count = 0
@@ -189,8 +134,8 @@ func (con *Session) Query(entity *graph.Entity, args map[string]interface{}, fie
 	}
 }
 
-func (con *Session) QueryOneById(entity *graph.Entity, id interface{}) interface{} {
-	return con.QueryOne(entity, graph.QueryArg{
+func (s *Session) QueryOneById(entityName string, id interface{}) interface{} {
+	return s.QueryOne(entityName, graph.QueryArg{
 		shared.ARG_WHERE: graph.QueryArg{
 			shared.ID_NAME: graph.QueryArg{
 				shared.ARG_EQ: id,
@@ -199,36 +144,13 @@ func (con *Session) QueryOneById(entity *graph.Entity, id interface{}) interface
 	})
 }
 
-// func (con *Session) QueryOneInterface(intf *graph.Interface, args map[string]interface{}) interface{} {
-// 	querySql, params := con.buildQueryInterfaceSQL(intf, args)
-
-// 	values := makeInterfaceQueryValues(intf)
-// 	err := con.Dbx.QueryRow(querySql, params...).Scan(values...)
-
-// 	switch {
-// 	case err == sql.ErrNoRows:
-// 		return nil
-// 	case err != nil:
-// 		panic(err.Error())
-// 	}
-
-// 	instance := convertValuesToInterface(values, intf)
-// 	for i := range intf.Children {
-// 		child := intf.Children[i]
-// 		oneEntityInstances := con.QueryByIds(child, []interface{}{instance[shared.ID]})
-// 		if len(oneEntityInstances) > 0 {
-// 			return oneEntityInstances[0]
-// 		}
-// 	}
-// 	return nil
-// }
-
-func (con *Session) QueryOne(entity *graph.Entity, args map[string]interface{}) interface{} {
-	queryStr, params := con.buildQueryEntityRecordsSQL(entity, args, entity.AllAttributes())
+func (s *Session) QueryOne(entityName string, args map[string]interface{}) interface{} {
+	entity := s.model.Graph.GetEntityByName(entityName)
+	queryStr, params := s.buildQueryEntityRecordsSQL(entity, args, entity.AllAttributes())
 
 	values := makeEntityQueryValues(entity.AllAttributes())
 	//log.Println("doQueryOneEntity SQL:", queryStr, params)
-	err := con.Dbx.QueryRow(queryStr, params...).Scan(values...)
+	err := s.Dbx.QueryRow(queryStr, params...).Scan(values...)
 	switch {
 	case err == sql.ErrNoRows:
 		log.Println(fmt.Sprintf("Can not find instance %s, %s", entity.Name(), args))
@@ -241,12 +163,12 @@ func (con *Session) QueryOne(entity *graph.Entity, args map[string]interface{}) 
 	return instance
 }
 
-func (con *Session) QueryAssociatedInstances(r *data.AssociationRef, ownerId uint64) []InsanceData {
+func (s *Session) QueryAssociatedInstances(r *data.AssociationRef, ownerId uint64) []InsanceData {
 	var instances []InsanceData
 	builder := dialect.GetSQLBuilder()
 	entity := r.TypeEntity()
 	queryStr := builder.BuildQueryAssociatedInstancesSQL(entity, ownerId, r.Table().Name, r.OwnerColumn().Name, r.TypeColumn().Name)
-	rows, err := con.Dbx.Query(queryStr)
+	rows, err := s.Dbx.Query(queryStr)
 	defer rows.Close()
 	if err != nil {
 		log.Panic(err.Error())
@@ -264,11 +186,12 @@ func (con *Session) QueryAssociatedInstances(r *data.AssociationRef, ownerId uin
 	return instances
 }
 
-func (con *Session) QueryByIds(entity *graph.Entity, ids []interface{}) []InsanceData {
+func (s *Session) QueryByIds(entityName string, ids []interface{}) []InsanceData {
+	entity := s.model.Graph.GetEntityByName(entityName)
 	var instances []map[string]interface{}
 	builder := dialect.GetSQLBuilder()
 	sql := builder.BuildQueryByIdsSQL(entity, len(ids))
-	rows, err := con.Dbx.Query(sql, ids...)
+	rows, err := s.Dbx.Query(sql, ids...)
 	defer rows.Close()
 	if err != nil {
 		panic(err.Error())
@@ -285,7 +208,7 @@ func (con *Session) QueryByIds(entity *graph.Entity, ids []interface{}) []Insanc
 	return instances
 }
 
-func (con *Session) BatchRealAssociations(
+func (s *Session) BatchRealAssociations(
 	association *graph.Association,
 	ids []uint64,
 	args graph.QueryArg,
@@ -299,7 +222,7 @@ func (con *Session) BatchRealAssociations(
 	argEntity := graph.BuildArgEntity(
 		typeEntity,
 		whereArgs,
-		con,
+		s,
 	)
 
 	queryStr := builder.BuildBatchAssociationBodySQL(argEntity,
@@ -320,7 +243,7 @@ func (con *Session) BatchRealAssociations(
 
 	queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[shared.ARG_ORDERBY])
 	log.Println("doBatchRealAssociations SQL:	", queryStr)
-	rows, err := con.Dbx.Query(queryStr, paramsList...)
+	rows, err := s.Dbx.Query(queryStr, paramsList...)
 	defer rows.Close()
 	if err != nil {
 		log.Println("出错SQL:", queryStr)
