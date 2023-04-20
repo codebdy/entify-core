@@ -11,8 +11,8 @@ import (
 
 type Repository struct {
 	DbConfig db.DbConfig
-	Model  *model.Model
-	MetaId shared.ID
+	Model    *model.Model
+	MetaId   shared.ID
 }
 
 func New(config db.DbConfig) *Repository {
@@ -28,4 +28,12 @@ func (r *Repository) PublishMeta(published, next *meta.UMLMeta, metaId shared.ID
 	nextModel := model.New(next, metaId)
 	diff := model.CreateDiff(publishedModel, nextModel)
 	orm.Migrage(diff, r.DbConfig)
+}
+
+func (r *Repository) OpenSession() (*orm.Session, error) {
+	return orm.Open(r.DbConfig)
+}
+
+func (r *Repository) IsEntityExists(name string) bool {
+	return orm.IsEntityExists(name, r.DbConfig)
 }
