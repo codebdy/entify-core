@@ -15,29 +15,28 @@ type Session struct {
 	Dbx    *db.Dbx
 }
 
-func (c *Session) BeginTx() error {
-	return c.Dbx.BeginTx()
+func (s *Session) BeginTx() error {
+	return s.Dbx.BeginTx()
 }
 
-func (c *Session) Commit() error {
-	return c.Dbx.Commit()
+func (s *Session) Commit() error {
+	return s.Dbx.Commit()
 }
 
-func (c *Session) ClearTx() {
-	c.Dbx.ClearTx()
+func (s *Session) ClearTx() {
+	s.Dbx.ClearTx()
 }
 
 //use for sql join table
-func (c *Session) CreateId() int {
-	c.idSeed++
-	return c.idSeed
+func (s *Session) CreateId() int {
+	s.idSeed++
+	return s.idSeed
 }
 
-func (con *Session) doCheckEntity(name string) bool {
+func (s *Session) doCheckEntity(name, database string) bool {
 	sqlBuilder := dialect.GetSQLBuilder()
 	var count int
-	//@@待修
-	err := con.Dbx.QueryRow(sqlBuilder.BuildTableCheckSQL(name, "config.GetDbConfig().Database")).Scan(&count)
+	err := s.Dbx.QueryRow(sqlBuilder.BuildTableCheckSQL(name, database)).Scan(&count)
 	switch {
 	case err == sql.ErrNoRows:
 		return false

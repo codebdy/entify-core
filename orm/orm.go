@@ -40,5 +40,5 @@ func IsEntityExists(name string, dbConfig db.DbConfig) bool {
 	if err != nil {
 		log.Panic(err.Error())
 	}
-	return session.doCheckEntity(name)
+	return session.doCheckEntity(name, dbConfig.Database)
 }
