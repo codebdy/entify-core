@@ -11,7 +11,7 @@ import (
 
 func Migrage(d *model.Diff, dbConfig db.DbConfig) {
 	var undoList []string
-	session, err := Open(dbConfig)
+	session, err := OpenWithoutRepository(dbConfig)
 	dbx := session.Dbx
 	if err != nil {
 		panic("Open db error:" + err.Error())

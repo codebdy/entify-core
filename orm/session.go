@@ -6,12 +6,13 @@ import (
 
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
+	"github.com/codebdy/entify/model"
 )
 
 type Session struct {
 	idSeed int //use for sql join table
-	//model  *model.Model
-	Dbx *db.Dbx
+	model  *model.Model
+	Dbx    *db.Dbx
 }
 
 func (c *Session) BeginTx() error {

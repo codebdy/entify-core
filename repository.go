@@ -31,7 +31,7 @@ func (r *Repository) PublishMeta(published, next *meta.UMLMeta, metaId shared.ID
 }
 
 func (r *Repository) OpenSession() (*orm.Session, error) {
-	return orm.Open(r.DbConfig)
+	return orm.Open(r.DbConfig, r.Model)
 }
 
 func (r *Repository) IsEntityExists(name string) bool {

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/codebdy/entify/db"
+	"github.com/codebdy/entify/model"
 )
 
 func DbString(cfg db.DbConfig) string {
@@ -17,7 +18,7 @@ func DbString(cfg db.DbConfig) string {
 	)
 }
 
-func Open(dbConfig db.DbConfig) (*Session, error) {
+func Open(dbConfig db.DbConfig, m *model.Model) (*Session, error) {
 	dbx, err := db.Open(dbConfig.Driver, DbString(dbConfig))
 	if err != nil {
 		return nil, err
@@ -25,13 +26,17 @@ func Open(dbConfig db.DbConfig) (*Session, error) {
 	session := Session{
 		idSeed: 1,
 		Dbx:    dbx,
-		//model:  model,
+		model:  m,
 	}
 	return &session, nil
 }
 
+func OpenWithoutRepository(dbConfig db.DbConfig) (*Session, error) {
+	return Open(dbConfig, nil)
+}
+
 func IsEntityExists(name string, dbConfig db.DbConfig) bool {
-	session, err := Open(dbConfig)
+	session, err := Open(dbConfig, nil)
 	if err != nil {
 		log.Panic(err.Error())
 	}
