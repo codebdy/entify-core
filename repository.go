@@ -21,6 +21,7 @@ func New(config db.DbConfig) *Repository {
 
 func (r *Repository) Init(umlMeta meta.UMLMeta, metaId shared.ID) {
 	r.MetaId = metaId
+	r.Model = model.New(&umlMeta, metaId)
 }
 
 func (r *Repository) PublishMeta(published, next *meta.UMLMeta, metaId shared.ID) {
