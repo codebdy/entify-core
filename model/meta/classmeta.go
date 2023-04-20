@@ -23,5 +23,5 @@ type ClassMeta struct {
 	OnUpdated   string          `json:"onUpdated"`
 	OnDeleted   string          `json:"onDeleted"`
 	//生成表名时使用,运行时动态注入，不持久化
-	AppId uint64
+	MetaId uint64
 }

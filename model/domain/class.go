@@ -38,7 +38,7 @@ func NewClass(c *meta.ClassMeta) *Class {
 		OnCreated:   c.OnCreated,
 		OnUpdated:   c.OnUpdated,
 		OnDeleted:   c.OnDeleted,
-		AppId:       c.AppId,
+		AppId:       c.MetaId,
 		PackageUuid: c.PackageUuid,
 	}
 

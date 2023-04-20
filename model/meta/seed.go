@@ -6,9 +6,9 @@ import (
 	"log"
 )
 
-func ReadContentFromJson(fileName string) MetaContent {
+func ReadContentFromJson(fileName string) UMLMeta {
 	data, err := ioutil.ReadFile(fileName)
-	content := MetaContent{}
+	content := UMLMeta{}
 	if nil != err {
 		log.Panic(err.Error())
 	} else {
@@ -18,8 +18,8 @@ func ReadContentFromJson(fileName string) MetaContent {
 	return content
 }
 
-var SystemMeta *MetaContent
-var DefualtAuthServiceMeta *MetaContent
+var SystemMeta *UMLMeta
+var DefualtAuthServiceMeta *UMLMeta
 
 func init() {
 	content := ReadContentFromJson("./seeds/system-meta.json")

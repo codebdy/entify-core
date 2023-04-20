@@ -14,7 +14,7 @@ func NewEnum(c *meta.ClassMeta) *Enum {
 		Uuid:   c.Uuid,
 		Name:   c.Name,
 		Values: make([]string, len(c.Attributes)),
-		AppId:  c.AppId,
+		AppId:  c.MetaId,
 	}
 
 	for i := range c.Attributes {
