@@ -12,8 +12,8 @@ type AssociationPovit struct {
 }
 
 func NewAssociationPovit(association *AssociationRef, sourceId uint64, targetId uint64) *AssociationPovit {
-	sourceColumn := association.SourceColumn()
-	targetColumn := association.TargetColumn()
+	sourceColumn := association.Association.SourceColumn()
+	targetColumn := association.Association.TargetColumn()
 	povit := AssociationPovit{
 		Association: association,
 		Source: &Field{

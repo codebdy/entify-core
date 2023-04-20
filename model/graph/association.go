@@ -1,6 +1,9 @@
 package graph
 
-import "github.com/codebdy/entify/model/meta"
+import (
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/table"
+)
 
 type Association struct {
 	Relation       *Relation
@@ -156,4 +159,44 @@ func (a *Association) GetName() string {
 
 func (a *Association) Path() string {
 	return a.Owner().Domain.Name + "." + a.Name()
+}
+
+func (a *Association) Table() *table.Table {
+	return a.Relation.Table
+}
+
+func (r *Association) SourceColumn() *table.Column {
+	for i := range r.Relation.Table.Columns {
+		column := r.Relation.Table.Columns[i]
+		if column.Name == r.Relation.SourceEntity.TableName() {
+			return column
+		}
+	}
+	return nil
+}
+
+func (r *Association) TargetColumn() *table.Column {
+	for i := range r.Relation.Table.Columns {
+		column := r.Relation.Table.Columns[i]
+		if column.Name == r.Relation.TargetEntity.TableName() {
+			return column
+		}
+	}
+	return nil
+}
+
+func (r *Association) OwnerColumn() *table.Column {
+	if r.IsSource() {
+		return r.SourceColumn()
+	} else {
+		return r.TargetColumn()
+	}
+}
+
+func (r *Association) TypeColumn() *table.Column {
+	if !r.IsSource() {
+		return r.SourceColumn()
+	} else {
+		return r.TargetColumn()
+	}
 }

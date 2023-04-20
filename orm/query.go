@@ -7,7 +7,6 @@ import (
 
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model/data"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/shared"
 )
@@ -163,11 +162,11 @@ func (s *Session) QueryOne(entityName string, args map[string]interface{}) inter
 	return instance
 }
 
-func (s *Session) QueryAssociatedInstances(r *data.AssociationRef, ownerId uint64) []InsanceData {
+func (s *Session) QueryAssociatedInstances(a *graph.Association, ownerId uint64) []InsanceData {
 	var instances []InsanceData
 	builder := dialect.GetSQLBuilder()
-	entity := r.TypeEntity()
-	queryStr := builder.BuildQueryAssociatedInstancesSQL(entity, ownerId, r.Table().Name, r.OwnerColumn().Name, r.TypeColumn().Name)
+	entity := a.TypeEntity()
+	queryStr := builder.BuildQueryAssociatedInstancesSQL(entity, ownerId, a.Table().Name, a.OwnerColumn().Name, a.TypeColumn().Name)
 	rows, err := s.Dbx.Query(queryStr)
 	defer rows.Close()
 	if err != nil {

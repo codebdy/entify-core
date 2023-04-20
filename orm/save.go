@@ -124,20 +124,20 @@ func (s *Session) saveAssociationInstance(ins *data.Instance) (uint64, error) {
 }
 func (s *Session) SaveAssociation(r *data.AssociationRef, ownerId uint64) error {
 	if r.Clear {
-		s.clearAssociation(r, ownerId)
+		s.clearAssociation(r.Association, ownerId)
 		return nil
 	}
 
 	synced := r.Synced
 	if len(synced) != 0 {
-		s.clearSyncedAssociation(r, ownerId, synced)
+		s.clearSyncedAssociation(r.Association, ownerId, synced)
 		s.saveAssociationInstances(synced, r, ownerId)
 		return nil
 	}
 
 	for _, ins := range r.Deleted {
 		if r.Cascade() {
-			s.DeleteInstance(ins)
+			s.DeleteInstance(ins.Entity.Name(), ins.Id)
 		} else {
 			povit := newAssociationPovit(r, ownerId, ins.Id)
 			s.DeleteAssociationPovit(povit)

@@ -5,15 +5,16 @@ import (
 
 	"github.com/codebdy/entify/db/dialect"
 	"github.com/codebdy/entify/model/data"
+	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/shared"
 )
 
 type InsanceData = map[string]interface{}
 
-func (s *Session) clearSyncedAssociation(r *data.AssociationRef, ownerId uint64, synced []*data.Instance) {
+func (s *Session) clearSyncedAssociation(a *graph.Association, ownerId uint64, synced []*data.Instance) {
 
 	//查出所有关联实例
-	associatedInstances := s.QueryAssociatedInstances(r, ownerId)
+	associatedInstances := s.QueryAssociatedInstances(a, ownerId)
 
 	for _, associatedIns := range associatedInstances {
 		willBeDelete := true
@@ -29,32 +30,28 @@ func (s *Session) clearSyncedAssociation(r *data.AssociationRef, ownerId uint64,
 		//删除需要被删除的
 		if willBeDelete {
 			//如果是组合，被关联实例
-			if r.Association.IsCombination() {
-				ins := data.NewInstance(associatedIns, r.Association.TypeEntity())
-				s.DeleteInstance(ins)
+			if a.IsCombination() {
+				ins := data.NewInstance(associatedIns, a.TypeEntity())
+				s.DeleteInstance(ins.Entity.Name(), ins.Id)
 			}
-			s.deleteAssociationPovit(r, associatedIns[shared.ID_NAME].(uint64))
+			s.deleteAssociationPovit(a, associatedIns[shared.ID_NAME].(uint64))
 		}
 	}
 }
-func (con *Session) clearAssociation(r *data.AssociationRef, ownerId uint64) {
-	if r.Association.IsCombination() {
+func (con *Session) clearAssociation(r *graph.Association, ownerId uint64) {
+	if r.IsCombination() {
 		con.deleteAssociatedInstances(r, ownerId)
 	}
 	con.deleteAssociationPovit(r, ownerId)
 }
 
-func (s *Session) checkAssociationPovit(r *data.AssociationRef, ownerId uint64) {
-
-}
-
-func (s *Session) deleteAssociationPovit(r *data.AssociationRef, ownerId uint64) {
+func (s *Session) deleteAssociationPovit(a *graph.Association, ownerId uint64) {
 	sqlBuilder := dialect.GetSQLBuilder()
 	//先检查是否有数据，如果有再删除，避免死锁
-	sql := sqlBuilder.BuildCheckAssociationSQL(ownerId, r.Table().Name, r.TypeColumn().Name)
+	sql := sqlBuilder.BuildCheckAssociationSQL(ownerId, a.Table().Name, a.TypeColumn().Name)
 	count := s.queryCount(sql)
 	if count > 0 {
-		sql = sqlBuilder.BuildClearAssociationSQL(ownerId, r.Table().Name, r.TypeColumn().Name)
+		sql = sqlBuilder.BuildClearAssociationSQL(ownerId, a.Table().Name, a.TypeColumn().Name)
 		_, err := s.Dbx.Exec(sql)
 		log.Println("deleteAssociationPovit SQL:" + sql)
 		if err != nil {
@@ -78,12 +75,11 @@ func (s *Session) queryCount(countSql string) int64 {
 	}
 }
 
-func (s *Session) deleteAssociatedInstances(r *data.AssociationRef, ownerId uint64) {
-	typeEntity := r.TypeEntity()
-	associatedInstances := s.QueryAssociatedInstances(r, ownerId)
+func (s *Session) deleteAssociatedInstances(a *graph.Association, ownerId uint64) {
+	typeEntity := a.TypeEntity()
+	associatedInstances := s.QueryAssociatedInstances(a, ownerId)
 	for i := range associatedInstances {
-		ins := data.NewInstance(associatedInstances[i], typeEntity)
-		s.DeleteInstance(ins)
+		s.DeleteInstance(typeEntity.Name(), associatedInstances[i]["id"].(shared.ID))
 	}
 }
 
@@ -96,14 +92,15 @@ func (s *Session) DeleteAssociationPovit(povit *data.AssociationPovit) {
 	}
 }
 
-func (s *Session) DeleteInstance(instance *data.Instance) {
+func (s *Session) DeleteInstance(entityName string, id shared.ID) {
 	var sql string
+	entity := s.model.Graph.GetEntityByName(entityName)
 	sqlBuilder := dialect.GetSQLBuilder()
-	tableName := instance.Table().Name
-	if instance.Entity.IsSoftDelete() {
-		sql = sqlBuilder.BuildSoftDeleteSQL(instance.Id, tableName)
+	tableName := entity.TableName()
+	if entity.IsSoftDelete() {
+		sql = sqlBuilder.BuildSoftDeleteSQL(id, tableName)
 	} else {
-		sql = sqlBuilder.BuildDeleteSQL(instance.Id, tableName)
+		sql = sqlBuilder.BuildDeleteSQL(id, tableName)
 	}
 
 	log.Println("DeleteInstance:", sql)
@@ -112,14 +109,14 @@ func (s *Session) DeleteInstance(instance *data.Instance) {
 		panic(err.Error())
 	}
 
-	associstions := instance.Associations
+	associstions := entity.Associations()
 	for i := range associstions {
 		asso := associstions[i]
-		if asso.Association.IsCombination() {
+		if asso.IsCombination() {
 			if !asso.TypeEntity().IsSoftDelete() {
-				s.deleteAssociationPovit(asso, instance.Id)
+				s.deleteAssociationPovit(asso, id)
 			}
-			s.deleteAssociatedInstances(asso, instance.Id)
+			s.deleteAssociatedInstances(asso, id)
 		}
 	}
 }

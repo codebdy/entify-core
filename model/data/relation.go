@@ -81,47 +81,12 @@ func (r *AssociationRef) convertToInstances(data interface{}) []*Instance {
 	return doConvertToInstances(data, r.Association.IsArray(), r.TypeEntity())
 }
 
-func (r *AssociationRef) SourceColumn() *table.Column {
-	for i := range r.Association.Relation.Table.Columns {
-		column := r.Association.Relation.Table.Columns[i]
-		if column.Name == r.Association.Relation.SourceEntity.TableName() {
-			return column
-		}
-	}
-	return nil
-}
-
-func (r *AssociationRef) TargetColumn() *table.Column {
-	for i := range r.Association.Relation.Table.Columns {
-		column := r.Association.Relation.Table.Columns[i]
-		if column.Name == r.Association.Relation.TargetEntity.TableName() {
-			return column
-		}
-	}
-	return nil
-}
-
 func (r *AssociationRef) Table() *table.Table {
 	return r.Association.Relation.Table
 }
 
 func (r *AssociationRef) IsSource() bool {
 	return r.Association.IsSource()
-}
-
-func (r *AssociationRef) OwnerColumn() *table.Column {
-	if r.IsSource() {
-		return r.SourceColumn()
-	} else {
-		return r.TargetColumn()
-	}
-}
-func (r *AssociationRef) TypeColumn() *table.Column {
-	if !r.IsSource() {
-		return r.SourceColumn()
-	} else {
-		return r.TargetColumn()
-	}
 }
 
 func (r *AssociationRef) TypeEntity() *graph.Entity {
