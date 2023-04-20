@@ -20,17 +20,17 @@ func ConvertId(id interface{}) uint64 {
 }
 
 func ConvertObjectId(object map[string]interface{}) map[string]interface{} {
-	if object[shared.ID] == nil {
+	if object[shared.ID_NAME] == nil {
 		return object
 	}
-	switch object[shared.ID].(type) {
+	switch object[shared.ID_NAME].(type) {
 	case string:
-		id, err := strconv.ParseUint(object[shared.ID].(string), 10, 64)
+		id, err := strconv.ParseUint(object[shared.ID_NAME].(string), 10, 64)
 		if err != nil {
 			panic("Convert id error:" + err.Error())
 		}
 
-		object[shared.ID] = id
+		object[shared.ID_NAME] = id
 	}
 
 	return object

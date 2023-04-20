@@ -186,12 +186,12 @@ func buildArgAssociation(argAssociation *graph.ArgAssociation, owner *graph.ArgE
 			" LEFT JOIN %s %s ON %s=%s LEFT JOIN %s %s ON %s=%s ",
 			argAssociation.Association.Relation.Table.Name,
 			povitTableAlias,
-			owner.Alise()+"."+shared.ID,
+			owner.Alise()+"."+shared.ID_NAME,
 			povitTableAlias+"."+owner.Entity.Table.Name,
 			typeEntity.Entity.TableName(),
 			typeEntity.Alise(),
 			povitTableAlias+"."+typeEntity.Entity.Table.Name,
-			typeEntity.Alise()+"."+shared.ID,
+			typeEntity.Alise()+"."+shared.ID_NAME,
 		)
 
 		for i := range typeEntity.Associations {

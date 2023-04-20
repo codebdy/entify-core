@@ -3,9 +3,9 @@ package orm
 import (
 	"log"
 
-	"github.com/codebdy/entify/shared"
 	"github.com/codebdy/entify/db/dialect"
 	"github.com/codebdy/entify/model/data"
+	"github.com/codebdy/entify/shared"
 )
 
 type InsanceData = map[string]interface{}
@@ -20,7 +20,7 @@ func (s *Session) clearSyncedAssociation(r *data.AssociationRef, ownerId uint64,
 
 		//找出需要被删除的
 		for _, syncedIns := range synced {
-			if syncedIns.Id != 0 && syncedIns.Id == associatedIns[shared.ID] {
+			if syncedIns.Id != 0 && syncedIns.Id == associatedIns[shared.ID_NAME] {
 				willBeDelete = false
 				continue
 			}
@@ -33,7 +33,7 @@ func (s *Session) clearSyncedAssociation(r *data.AssociationRef, ownerId uint64,
 				ins := data.NewInstance(associatedIns, r.Association.TypeEntity())
 				s.DeleteInstance(ins)
 			}
-			s.deleteAssociationPovit(r, associatedIns[shared.ID].(uint64))
+			s.deleteAssociationPovit(r, associatedIns[shared.ID_NAME].(uint64))
 		}
 	}
 }

@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/shared"
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
 	"github.com/codebdy/entify/model/data"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/shared"
 )
 
 type QueryResponse struct {
@@ -192,7 +192,7 @@ func (con *Session) Query(entity *graph.Entity, args map[string]interface{}, fie
 func (con *Session) QueryOneById(entity *graph.Entity, id interface{}) interface{} {
 	return con.QueryOne(entity, graph.QueryArg{
 		shared.ARG_WHERE: graph.QueryArg{
-			shared.ID: graph.QueryArg{
+			shared.ID_NAME: graph.QueryArg{
 				shared.ARG_EQ: id,
 			},
 		},
@@ -348,7 +348,7 @@ func merageInstances(source []InsanceData, target []InsanceData) {
 		souceObj := source[i]
 		for j := range target {
 			targetObj := target[j]
-			if souceObj[shared.ID] == targetObj[shared.ID] {
+			if souceObj[shared.ID_NAME] == targetObj[shared.ID_NAME] {
 				targetObj[shared.ASSOCIATION_OWNER_ID] = souceObj[shared.ASSOCIATION_OWNER_ID]
 				source[i] = targetObj
 			}

@@ -116,8 +116,8 @@ const (
 )
 
 const (
-	ID string = "id"
-	OF string = "Of"
+	ID_NAME string = "id"
+	OF      string = "Of"
 )
 
 const (

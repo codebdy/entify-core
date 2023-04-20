@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/table"
 	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/table"
 	"github.com/codebdy/entify/shared"
 	"github.com/google/uuid"
 )
@@ -32,8 +32,8 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 		Entity:   entity,
 		ValueMap: object,
 	}
-	if object[shared.ID] != nil {
-		instance.Id = parseId(object[shared.ID])
+	if object[shared.ID_NAME] != nil {
+		instance.Id = parseId(object[shared.ID_NAME])
 	}
 
 	if instance.IsEmperty() {
@@ -49,7 +49,7 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 				Value:  time.Now(),
 			})
 		} else if column.Type == meta.UUID &&
-			object[shared.ID] == nil &&
+			object[shared.ID_NAME] == nil &&
 			column.AutoGenerate && object[column.Name] == nil {
 			instance.Fields = append(instance.Fields, &Field{
 				Column: column,
@@ -60,7 +60,7 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 				Column: column,
 				Value:  shared.BcryptEncode(object[column.Name].(string)),
 			})
-		} else if object[column.Name] != nil && object[column.Name] != shared.ID { //ID额外处理
+		} else if object[column.Name] != nil && object[column.Name] != shared.ID_NAME { //ID额外处理
 			instance.Fields = append(instance.Fields, &Field{
 				Column: column,
 				Value:  object[column.Name],
@@ -80,7 +80,7 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 }
 
 func (ins *Instance) IsEmperty() bool {
-	id := ins.ValueMap[shared.ID]
+	id := ins.ValueMap[shared.ID_NAME]
 	return len(ins.ValueMap) <= 1 &&
 		(id != nil || ins.Id != 0)
 }
@@ -102,7 +102,7 @@ func (ins *Instance) IsInsert() bool {
 	}
 	for i := range ins.Fields {
 		field := ins.Fields[i]
-		if field.Column.Name == shared.ID {
+		if field.Column.Name == shared.ID_NAME {
 			if field.Value != nil {
 				return false
 			}

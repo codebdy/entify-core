@@ -191,7 +191,7 @@ func (b *MySQLBuilder) ColumnTypeSQL(column *table.Column) string {
 
 func (b *MySQLBuilder) BuildColumnSQL(column *table.Column) string {
 	sql := "`" + column.Name + "` " + b.ColumnTypeSQL(column)
-	if column.Name == shared.ID {
+	if column.Name == shared.ID_NAME {
 		sql = fmt.Sprintf(sql + " AUTO_INCREMENT")
 	}
 	return sql
