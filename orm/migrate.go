@@ -9,9 +9,9 @@ import (
 	"github.com/codebdy/entify/model/table"
 )
 
-func Migrage(d *model.Diff) {
+func Migrage(d *model.Diff, dbConfig db.DbConfig) {
 	var undoList []string
-	session, err := Open()
+	session, err := Open(dbConfig)
 	dbx := session.Dbx
 	if err != nil {
 		panic("Open db error:" + err.Error())

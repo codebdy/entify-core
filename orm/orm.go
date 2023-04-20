@@ -17,9 +17,8 @@ func DbString(cfg db.DbConfig) string {
 	)
 }
 
-func Open() (*Session, error) {
-	cfg := db.DbConfig{}//config.GetDbConfig()
-	dbx, err := db.Open(cfg.Driver, DbString(cfg))
+func Open(dbConfig db.DbConfig) (*Session, error) {
+	dbx, err := db.Open(dbConfig.Driver, DbString(dbConfig))
 	if err != nil {
 		return nil, err
 	}
@@ -31,8 +30,8 @@ func Open() (*Session, error) {
 	return &session, nil
 }
 
-func IsEntityExists(name string) bool {
-	session, err := Open()
+func IsEntityExists(name string, dbConfig db.DbConfig) bool {
+	session, err := Open(dbConfig)
 	if err != nil {
 		log.Panic(err.Error())
 	}
