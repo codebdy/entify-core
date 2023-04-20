@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/codebdy/entify/entify/model/domain"
+import "github.com/codebdy/entify/model/domain"
 
 type Attribute struct {
 	domain.Attribute

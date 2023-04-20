@@ -3,9 +3,8 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/consts"
-	"github.com/codebdy/entify/entify/model/domain"
-	"github.com/codebdy/entify/leda-shared/utils"
+	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify/model/domain"
 
 	"github.com/gertd/go-pluralize"
 )
@@ -50,11 +49,11 @@ func (c *Class) AddAssociation(a *Association) {
 }
 
 func (c *Class) TableName() string {
-	name := utils.SnakeString(c.Domain.Name)
+	name := shared.SnakeString(c.Domain.Name)
 	if c.Domain.AppId == 0 {
 		return name
 	}
-	return fmt.Sprintf("%s%d_%s", consts.TABLE_PREFIX, c.Domain.AppId, name)
+	return fmt.Sprintf("%s%d_%s", shared.TABLE_PREFIX, c.Domain.AppId, name)
 }
 
 func (c *Class) IsSoftDelete() bool {
@@ -63,41 +62,41 @@ func (c *Class) IsSoftDelete() bool {
 
 func (c *Class) QueryName() string {
 	pluralize := pluralize.NewClient()
-	return utils.FirstLower(pluralize.Plural(c.Name()))
+	return shared.FirstLower(pluralize.Plural(c.Name()))
 }
 
 func (c *Class) QueryOneName() string {
-	return consts.ONE + utils.FirstUpper(c.Name())
+	return shared.ONE + shared.FirstUpper(c.Name())
 }
 
 func (c *Class) QueryAggregateName() string {
-	return utils.FirstLower(c.Name()) + utils.FirstUpper(consts.AGGREGATE)
+	return shared.FirstLower(c.Name()) + shared.FirstUpper(shared.AGGREGATE)
 }
 
 func (c *Class) DeleteName() string {
-	return consts.DELETE + utils.FirstUpper(c.Name())
+	return shared.DELETE + shared.FirstUpper(c.Name())
 }
 
 func (c *Class) DeleteByIdName() string {
-	return consts.DELETE + utils.FirstUpper(c.Name()) + consts.BY_ID
+	return shared.DELETE + shared.FirstUpper(c.Name()) + shared.BY_ID
 }
 
 func (c *Class) SetName() string {
-	return consts.SET + utils.FirstUpper(c.Name())
+	return shared.SET + shared.FirstUpper(c.Name())
 }
 
 func (c *Class) UpsertName() string {
-	return consts.UPSERT + utils.FirstUpper(c.Name())
+	return shared.UPSERT + shared.FirstUpper(c.Name())
 }
 
 func (c *Class) UpsertOneName() string {
-	return consts.UPSERT_ONE + utils.FirstUpper(c.Name())
+	return shared.UPSERT_ONE + shared.FirstUpper(c.Name())
 }
 
 func (c *Class) AggregateName() string {
-	return c.Name() + utils.FirstUpper(consts.AGGREGATE)
+	return c.Name() + shared.FirstUpper(shared.AGGREGATE)
 }
 
 func (c *Class) ListName() string {
-	return c.Name() + utils.FirstUpper(consts.LIST)
+	return c.Name() + shared.FirstUpper(shared.LIST)
 }

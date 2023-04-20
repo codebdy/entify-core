@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/codebdy/entify/entify/model/table"
+	"github.com/codebdy/entify/model/table"
 )
 
 type AssociationPovit struct {

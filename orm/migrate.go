@@ -5,8 +5,8 @@ import (
 
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/entify/model"
-	"github.com/codebdy/entify/entify/model/table"
+	"github.com/codebdy/entify/model"
+	"github.com/codebdy/entify/model/table"
 )
 
 func Migrage(d *model.Diff) {

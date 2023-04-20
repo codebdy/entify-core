@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/codebdy/entify/config"
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
 )
@@ -36,7 +35,8 @@ func (c *Session) CreateId() int {
 func (con *Session) doCheckEntity(name string) bool {
 	sqlBuilder := dialect.GetSQLBuilder()
 	var count int
-	err := con.Dbx.QueryRow(sqlBuilder.BuildTableCheckSQL(name, config.GetDbConfig().Database)).Scan(&count)
+	//@@待修
+	err := con.Dbx.QueryRow(sqlBuilder.BuildTableCheckSQL(name, "config.GetDbConfig().Database")).Scan(&count)
 	switch {
 	case err == sql.ErrNoRows:
 		return false

@@ -1,10 +1,10 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/entify/model/domain"
-	"github.com/codebdy/entify/entify/model/meta"
-	"github.com/codebdy/entify/entify/model/table"
-	"github.com/codebdy/entify/leda-shared/utils"
+	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify/shared"
 )
 
 type Relation struct {
@@ -34,11 +34,11 @@ func NewRelation(
 	roleOfSource := r.RoleOfSource
 
 	if sourceEntity.Uuid() != r.Source.Uuid {
-		roleOfSource = roleOfSource + "Of" + utils.FirstUpper(sourceEntity.Name())
+		roleOfSource = roleOfSource + "Of" + shared.FirstUpper(sourceEntity.Name())
 	}
 
 	if targetEntity.Uuid() != r.Target.Uuid {
-		roleOfTarget = roleOfTarget + "Of" + utils.FirstUpper(targetEntity.Name())
+		roleOfTarget = roleOfTarget + "Of" + shared.FirstUpper(targetEntity.Name())
 	}
 
 	relation := &Relation{

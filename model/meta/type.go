@@ -1,7 +1,5 @@
 package meta
 
-import "github.com/codebdy/entify/consts"
-
 const (
 	ID                 string = "ID"
 	INT                string = "Int"
@@ -21,7 +19,6 @@ const (
 	ENUM_ARRAY         string = "EnumArray"
 	VALUE_OBJECT_ARRAY string = "ValueObjectArray"
 	ENTITY_ARRAY       string = "EntityArray"
-	FILE               string = consts.FILE
 	PASSWORD           string = "Password"
 	UUID               string = "Uuid"
 )

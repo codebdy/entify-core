@@ -1,10 +1,9 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/consts"
-	"github.com/codebdy/entify/entify/model/domain"
-	"github.com/codebdy/entify/entify/model/table"
-	"github.com/codebdy/entify/leda-shared/utils"
+	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify/model/table"
 )
 
 type Entity struct {
@@ -20,11 +19,11 @@ func NewEntity(c *domain.Class) *Entity {
 }
 
 func (e *Entity) GetHasManyName() string {
-	return utils.FirstUpper(consts.SET) + e.Name() + consts.HAS_MANY
+	return shared.FirstUpper(shared.SET) + e.Name() + shared.HAS_MANY
 }
 
 func (e *Entity) GetHasOneName() string {
-	return utils.FirstUpper(consts.SET) + e.Name() + consts.HAS_ONE
+	return shared.FirstUpper(shared.SET) + e.Name() + shared.HAS_ONE
 }
 
 //有同名接口

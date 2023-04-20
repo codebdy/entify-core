@@ -4,14 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 
-	"github.com/codebdy/entify/consts"
 	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/entify/model/data"
-	"github.com/codebdy/entify/entify/model/graph"
-	"github.com/codebdy/entify/entify/model/meta"
-	"github.com/codebdy/entify/leda-shared/utils"
-	"github.com/codebdy/entify/storage"
-	"github.com/mitchellh/mapstructure"
+	"github.com/codebdy/entify/model/data"
+	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/shared"
 )
 
 func makeFieldValues(fields []*data.Field) []interface{} {
@@ -31,13 +28,6 @@ func makeFieldValues(fields []*data.Field) []interface{} {
 			column.Type == meta.VALUE_OBJECT_ARRAY ||
 			column.Type == meta.ENTITY_ARRAY {
 			jsonString, err := json.Marshal(value)
-			if err != nil {
-				panic(err.Error())
-			}
-			value = jsonString
-		} else if column.Type == meta.FILE {
-			file := value.(storage.File)
-			jsonString, err := json.Marshal(file.Save(consts.UPLOAD_PATH))
 			if err != nil {
 				panic(err.Error())
 			}
@@ -94,9 +84,8 @@ func makeAttributeValue(attr *graph.Attribute) interface{} {
 		meta.DATE_ARRAY,
 		meta.ENUM_ARRAY,
 		meta.VALUE_OBJECT_ARRAY,
-		meta.ENTITY_ARRAY,
-		meta.FILE:
-		var value utils.JSON
+		meta.ENTITY_ARRAY:
+		var value shared.JSON
 		return &value
 		// COLUMN_SIMPLE_ARRAY string = "simpleArray" ##待添加代码
 		// COLUMN_JSON_ARRAY   string = "JsonArray"
@@ -167,18 +156,9 @@ func convertOneColumnValue(column *graph.Attribute, value interface{}) interface
 		meta.VALUE_OBJECT_ARRAY,
 		meta.ENTITY_ARRAY:
 		if value != nil {
-			return *value.(*utils.JSON)
+			return *value.(*shared.JSON)
 		}
 		return value
-	case meta.FILE:
-		var file storage.FileInfo
-		if value != nil {
-			err := mapstructure.Decode(value, &file)
-			if err != nil {
-				panic(err.Error())
-			}
-			return file
-		}
 	default:
 		nullValue := value.(*sql.NullString)
 		if nullValue.Valid {

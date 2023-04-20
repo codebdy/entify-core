@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/codebdy/entify/entify/model/meta"
+import "github.com/codebdy/entify/model/meta"
 
 type Method struct {
 	meta.MethodMeta

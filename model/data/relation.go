@@ -1,9 +1,9 @@
 package data
 
 import (
-	"github.com/codebdy/entify/consts"
-	"github.com/codebdy/entify/entify/model/graph"
-	"github.com/codebdy/entify/entify/model/table"
+	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/model/table"
 )
 
 type AssociationRef struct {

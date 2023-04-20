@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/entify/model/data"
+	"github.com/codebdy/entify/model/data"
 )
 
 func (s *Session) SaveOne(instance *data.Instance) (uint64, error) {

@@ -4,9 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/codebdy/entify/contexts"
-	"github.com/codebdy/entify/entify/model/graph"
-	"github.com/codebdy/entify/entify/model/observer/consts"
+	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
 )
 
 type ModelObserver interface {
@@ -28,8 +27,8 @@ func RemoveObserver(key string) {
 }
 
 func EmitObjectPosted(object map[string]interface{}, entity *graph.Entity, ctx context.Context) {
-	newCtx := context.WithValue(context.Background(), consts.CONTEXT_VALUES, contexts.Values(ctx))
-	newCtx = context.WithValue(newCtx, consts.LOADERS, ctx.Value(consts.LOADERS))
+	//newCtx := context.WithValue(context.Background(), consts.CONTEXT_VALUES, contexts.Values(ctx))
+	newCtx := context.WithValue(context.Background(), consts.LOADERS, ctx.Value(consts.LOADERS))
 	go func() {
 		ModelObservers.Range(func(key interface{}, value interface{}) bool {
 			value.(ModelObserver).ObjectPosted(object, entity, newCtx)

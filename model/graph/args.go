@@ -3,7 +3,7 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/consts"
+	"github.com/codebdy/entify/shared"
 )
 
 const PREFIX_T string = "t"
@@ -96,12 +96,12 @@ func BuildArgEntity(entity *Entity, where interface{}, ider Ider) *ArgEntity {
 func buildWhereEntity(argEntity *ArgEntity, where QueryArg, ider Ider) {
 	for key, value := range where {
 		switch key {
-		case consts.ARG_NOT:
+		case shared.ARG_NOT:
 			if subWhere, ok := value.(QueryArg); ok {
 				buildWhereEntity(argEntity, subWhere, ider)
 			}
 			break
-		case consts.ARG_AND, consts.ARG_OR:
+		case shared.ARG_AND, shared.ARG_OR:
 			args := []QueryArg{}
 			if args2, ok := value.([]QueryArg); ok {
 				args = args2

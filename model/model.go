@@ -1,9 +1,9 @@
 package model
 
 import (
-	"github.com/codebdy/entify/entify/model/domain"
-	"github.com/codebdy/entify/entify/model/graph"
-	"github.com/codebdy/entify/entify/model/meta"
+	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/meta"
 )
 
 type Model struct {

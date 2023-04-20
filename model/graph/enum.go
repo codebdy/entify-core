@@ -1,7 +1,7 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/entify/model/domain"
+	"github.com/codebdy/entify/model/domain"
 )
 
 type Enum struct {

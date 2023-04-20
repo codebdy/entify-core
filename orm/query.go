@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/consts"
+	"github.com/codebdy/entify/shared"
 	"github.com/codebdy/entify/db"
 	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/entify/model/data"
-	"github.com/codebdy/entify/entify/model/graph"
+	"github.com/codebdy/entify/model/data"
+	"github.com/codebdy/entify/model/graph"
 )
 
 type QueryResponse struct {
@@ -25,7 +25,7 @@ type QueryResponse struct {
 // 	builder := dialect.GetSQLBuilder()
 // 	for i := range intf.Children {
 // 		entity := intf.Children[i]
-// 		whereArgs := args[consts.ARG_WHERE]
+// 		whereArgs := args[shared.ARG_WHERE]
 // 		argEntity := graph.BuildArgEntity(
 // 			entity,
 // 			whereArgs,
@@ -40,7 +40,7 @@ type QueryResponse struct {
 
 // 			paramsList = append(paramsList, params...)
 // 		}
-// 		queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[consts.ARG_ORDERBY])
+// 		queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[shared.ARG_ORDERBY])
 
 // 		sqls = append(sqls, queryStr)
 // 	}
@@ -56,7 +56,7 @@ func (con *Session) buildQueryEntitySQL(
 	queryBody string,
 ) (string, []interface{}) {
 	var paramsList []interface{}
-	//whereArgs := con.v.WeaveAuthInArgs(entity.Uuid(), args[consts.ARG_WHERE])
+	//whereArgs := con.v.WeaveAuthInArgs(entity.Uuid(), args[shared.ARG_WHERE])
 	// argEntity := graph.BuildArgEntity(
 	// 	entity,
 	// 	whereArgs,
@@ -72,12 +72,12 @@ func (con *Session) buildQueryEntitySQL(
 		paramsList = append(paramsList, params...)
 	}
 
-	queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[consts.ARG_ORDERBY])
+	queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[shared.ARG_ORDERBY])
 	return queryStr, paramsList
 }
 
 func (con *Session) buildQueryEntityRecordsSQL(entity *graph.Entity, args map[string]interface{}, attributes []*graph.Attribute) (string, []interface{}) {
-	whereArgs := args[consts.ARG_WHERE]
+	whereArgs := args[shared.ARG_WHERE]
 	argEntity := graph.BuildArgEntity(
 		entity,
 		whereArgs,
@@ -87,18 +87,18 @@ func (con *Session) buildQueryEntityRecordsSQL(entity *graph.Entity, args map[st
 	queryStr := builder.BuildQuerySQLBody(argEntity, attributes)
 	sqlStr, params := con.buildQueryEntitySQL(entity, args, whereArgs, argEntity, queryStr)
 
-	if args[consts.ARG_LIMIT] != nil {
-		sqlStr = sqlStr + fmt.Sprintf(" LIMIT %d ", args[consts.ARG_LIMIT])
+	if args[shared.ARG_LIMIT] != nil {
+		sqlStr = sqlStr + fmt.Sprintf(" LIMIT %d ", args[shared.ARG_LIMIT])
 	}
-	if args[consts.ARG_OFFSET] != nil {
-		sqlStr = sqlStr + fmt.Sprintf(" OFFSET %d ", args[consts.ARG_OFFSET])
+	if args[shared.ARG_OFFSET] != nil {
+		sqlStr = sqlStr + fmt.Sprintf(" OFFSET %d ", args[shared.ARG_OFFSET])
 	}
 
 	return sqlStr, params
 }
 
 func (con *Session) buildQueryEntityCountSQL(entity *graph.Entity, args map[string]interface{}) (string, []interface{}) {
-	whereArgs := args[consts.ARG_WHERE]
+	whereArgs := args[shared.ARG_WHERE]
 	argEntity := graph.BuildArgEntity(
 		entity,
 		whereArgs,
@@ -135,7 +135,7 @@ func (con *Session) buildQueryEntityCountSQL(entity *graph.Entity, args map[stri
 
 // 	instancesIds := make([]interface{}, len(instances))
 // 	for i := range instances {
-// 		instancesIds[i] = instances[i][consts.ID]
+// 		instancesIds[i] = instances[i][shared.ID]
 // 	}
 
 // 	for i := range intf.Children {
@@ -191,9 +191,9 @@ func (con *Session) Query(entity *graph.Entity, args map[string]interface{}, fie
 
 func (con *Session) QueryOneById(entity *graph.Entity, id interface{}) interface{} {
 	return con.QueryOne(entity, graph.QueryArg{
-		consts.ARG_WHERE: graph.QueryArg{
-			consts.ID: graph.QueryArg{
-				consts.ARG_EQ: id,
+		shared.ARG_WHERE: graph.QueryArg{
+			shared.ID: graph.QueryArg{
+				shared.ARG_EQ: id,
 			},
 		},
 	})
@@ -215,7 +215,7 @@ func (con *Session) QueryOneById(entity *graph.Entity, id interface{}) interface
 // 	instance := convertValuesToInterface(values, intf)
 // 	for i := range intf.Children {
 // 		child := intf.Children[i]
-// 		oneEntityInstances := con.QueryByIds(child, []interface{}{instance[consts.ID]})
+// 		oneEntityInstances := con.QueryByIds(child, []interface{}{instance[shared.ID]})
 // 		if len(oneEntityInstances) > 0 {
 // 			return oneEntityInstances[0]
 // 		}
@@ -295,7 +295,7 @@ func (con *Session) BatchRealAssociations(
 
 	builder := dialect.GetSQLBuilder()
 	typeEntity := association.TypeEntity()
-	whereArgs := args[consts.ARG_WHERE]
+	whereArgs := args[shared.ARG_WHERE]
 	argEntity := graph.BuildArgEntity(
 		typeEntity,
 		whereArgs,
@@ -318,7 +318,7 @@ func (con *Session) BatchRealAssociations(
 		paramsList = append(paramsList, params...)
 	}
 
-	queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[consts.ARG_ORDERBY])
+	queryStr = queryStr + builder.BuildOrderBySQL(argEntity, args[shared.ARG_ORDERBY])
 	log.Println("doBatchRealAssociations SQL:	", queryStr)
 	rows, err := con.Dbx.Query(queryStr, paramsList...)
 	defer rows.Close()
@@ -336,7 +336,7 @@ func (con *Session) BatchRealAssociations(
 			panic(err.Error())
 		}
 		instance := convertValuesToEntity(values, typeEntity.AllAttributes())
-		instance[consts.ASSOCIATION_OWNER_ID] = values[len(values)-1].(*db.NullUint64).Uint64
+		instance[shared.ASSOCIATION_OWNER_ID] = values[len(values)-1].(*db.NullUint64).Uint64
 		instances = append(instances, instance)
 	}
 
@@ -348,8 +348,8 @@ func merageInstances(source []InsanceData, target []InsanceData) {
 		souceObj := source[i]
 		for j := range target {
 			targetObj := target[j]
-			if souceObj[consts.ID] == targetObj[consts.ID] {
-				targetObj[consts.ASSOCIATION_OWNER_ID] = souceObj[consts.ASSOCIATION_OWNER_ID]
+			if souceObj[shared.ID] == targetObj[shared.ID] {
+				targetObj[shared.ASSOCIATION_OWNER_ID] = souceObj[shared.ASSOCIATION_OWNER_ID]
 				source[i] = targetObj
 			}
 		}

@@ -3,9 +3,9 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/entify/model/domain"
-	"github.com/codebdy/entify/entify/model/meta"
-	"github.com/codebdy/entify/entify/model/table"
+	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/table"
 )
 
 type Model struct {

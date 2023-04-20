@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/codebdy/entify/entify/model/meta"
+import "github.com/codebdy/entify/model/meta"
 
 type Association struct {
 	Relation       *Relation

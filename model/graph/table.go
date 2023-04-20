@@ -3,9 +3,9 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/consts"
-	"github.com/codebdy/entify/entify/model/meta"
-	"github.com/codebdy/entify/entify/model/table"
+	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/table"
 )
 
 func NewEntityTable(entity *Entity) *table.Table {
@@ -32,9 +32,9 @@ func NewAttributeColumn(attr *Attribute) *table.Column {
 }
 
 func NewRelationTable(relation *Relation) *table.Table {
-	prefix := consts.PIVOT
+	prefix := shared.PIVOT
 	if relation.AppId != 0 {
-		prefix = fmt.Sprintf("%s%d%s", consts.TABLE_PREFIX, relation.AppId, consts.PIVOT)
+		prefix = fmt.Sprintf("%s%d%s", shared.TABLE_PREFIX, relation.AppId, shared.PIVOT)
 	}
 	name := fmt.Sprintf(
 		"%s_%d_%d_%d",

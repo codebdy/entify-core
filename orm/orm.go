@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/config"
 	"github.com/codebdy/entify/db"
 )
 
-func DbString(cfg config.DbConfig) string {
+func DbString(cfg db.DbConfig) string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		cfg.User,
 		cfg.Password,
@@ -19,7 +18,7 @@ func DbString(cfg config.DbConfig) string {
 }
 
 func Open() (*Session, error) {
-	cfg := config.GetDbConfig()
+	cfg := db.DbConfig{}//config.GetDbConfig()
 	dbx, err := db.Open(cfg.Driver, DbString(cfg))
 	if err != nil {
 		return nil, err

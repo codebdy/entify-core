@@ -1,6 +1,6 @@
 package model
 
-import "github.com/codebdy/entify/entify/model/table"
+import "github.com/codebdy/entify/model/table"
 
 type ModifyAtom struct {
 	ExcuteSQL string

@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"github.com/codebdy/entify/entify/model/meta"
+	"github.com/codebdy/entify/model/meta"
 )
 
 type Model struct {

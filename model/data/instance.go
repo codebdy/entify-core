@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/codebdy/entify/entify/model/graph"
-	"github.com/codebdy/entify/entify/model/meta"
-	"github.com/codebdy/entify/entify/model/table"
-	utils "github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/shared"
 	"github.com/google/uuid"
 )
 
@@ -58,7 +58,7 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 		} else if column.Type == meta.PASSWORD && object[column.Name] != nil {
 			instance.Fields = append(instance.Fields, &Field{
 				Column: column,
-				Value:  utils.BcryptEncode(object[column.Name].(string)),
+				Value:  shared.BcryptEncode(object[column.Name].(string)),
 			})
 		} else if object[column.Name] != nil && object[column.Name] != shared.ID { //ID额外处理
 			instance.Fields = append(instance.Fields, &Field{
