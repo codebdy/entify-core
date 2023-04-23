@@ -7,6 +7,7 @@ import (
 	"github.com/codebdy/entify/model/meta"
 	"github.com/codebdy/entify/orm"
 	"github.com/codebdy/entify/shared"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type Repository struct {

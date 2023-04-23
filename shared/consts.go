@@ -91,22 +91,6 @@ const (
 	TYPE    string = "type"
 )
 
-/**
-* Meta实体用到的常量
-**/
-const (
-	META_ID                string = "id"
-	META_STATUS            string = "status"
-	META_CONTENT           string = "content"
-	META_PUBLISHED_CONTENT        = "publishedContent"
-	META_PUBLISHEDAT       string = "publishedAt"
-	META_CREATEDAT         string = "createdAt"
-	META_UPDATEDAT         string = "updatedAt"
-
-	META_CLASSES   string = "classes"
-	META_RELATIONS string = "relations"
-)
-
 const (
 	ID_SUFFIX     string = "_id"
 	PIVOT         string = "pivot"
@@ -132,7 +116,3 @@ const (
 )
 
 const ASSOCIATION_OWNER_ID = "owner__rx__id"
-
-const SYSTEM = "System"
-const CREATEDATE = "createDate"
-const UPDATEDATE = "updateDate"
