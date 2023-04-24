@@ -10,8 +10,11 @@ type Model struct {
 
 func New(m *UMLMeta, metaId uint64) *Model {
 	model := Model{
-		Classes:   make([]*ClassMeta, len(m.Classes)),
-		Relations: make([]*RelationMeta, len(m.Relations)),
+		Classes:      make([]*ClassMeta, len(m.Classes)),
+		Relations:    make([]*RelationMeta, len(m.Relations)),
+		ScriptLogics: make([]*MethodMeta, len(m.ScriptLogics)),
+		GraphLogics:  make([]*MethodMeta, len(m.GraphLogics)),
+		APIs:         make([]*MethodMeta, len(m.APIs)),
 	}
 
 	for i := range m.Classes {
