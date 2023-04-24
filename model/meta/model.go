@@ -1,8 +1,11 @@
 package meta
 
 type Model struct {
-	Classes   []*ClassMeta
-	Relations []*RelationMeta
+	Classes      []*ClassMeta
+	Relations    []*RelationMeta
+	ScriptLogics []*MethodMeta
+	GraphLogics  []*MethodMeta
+	APIs         []*MethodMeta
 }
 
 func New(m *UMLMeta, metaId uint64) *Model {
@@ -24,6 +27,19 @@ func New(m *UMLMeta, metaId uint64) *Model {
 			model.Relations[i].AppId = metaId
 		}
 	}
+
+	for i := range m.ScriptLogics {
+		model.ScriptLogics[i] = &m.ScriptLogics[i]
+	}
+
+	for i := range m.GraphLogics {
+		model.GraphLogics[i] = &m.GraphLogics[i]
+	}
+
+	for i := range m.APIs {
+		model.APIs[i] = &m.APIs[i]
+	}
+
 	return &model
 }
 
