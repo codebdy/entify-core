@@ -1,10 +1,6 @@
 package model
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
-
 	"github.com/codebdy/entify/model/domain"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"
@@ -29,15 +25,3 @@ func New(c *meta.UMLMeta, metaId uint64) *Model {
 }
 
 var SystemModel *Model
-
-func ReadContentFromJson(fileName string) meta.UMLMeta {
-	data, err := ioutil.ReadFile(fileName)
-	content := meta.UMLMeta{}
-	if nil != err {
-		log.Panic(err.Error())
-	} else {
-		err = json.Unmarshal(data, &content)
-	}
-
-	return content
-}
