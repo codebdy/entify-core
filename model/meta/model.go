@@ -3,6 +3,7 @@ package meta
 type Model struct {
 	Classes      []*ClassMeta
 	Relations    []*RelationMeta
+	Codes        []*CodeMeta
 	ScriptLogics []*MethodMeta
 	GraphLogics  []*MethodMeta
 	APIs         []*MethodMeta
@@ -12,6 +13,7 @@ func New(m *UMLMeta, metaId uint64) *Model {
 	model := Model{
 		Classes:      make([]*ClassMeta, len(m.Classes)),
 		Relations:    make([]*RelationMeta, len(m.Relations)),
+		Codes:        make([]*CodeMeta, len(m.Codes)),
 		ScriptLogics: make([]*MethodMeta, len(m.ScriptLogics)),
 		GraphLogics:  make([]*MethodMeta, len(m.GraphLogics)),
 		APIs:         make([]*MethodMeta, len(m.APIs)),
@@ -29,6 +31,9 @@ func New(m *UMLMeta, metaId uint64) *Model {
 		if model.Relations[i].AppId == 0 {
 			model.Relations[i].AppId = metaId
 		}
+	}
+	for i := range m.Codes {
+		model.Codes[i] = &m.Codes[i]
 	}
 
 	for i := range m.ScriptLogics {
