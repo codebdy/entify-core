@@ -255,16 +255,16 @@ func (b *MySQLBuilder) BuildOrderBySQL(
 				orderByValue := orderByArg[key].(string)
 				fieldName := argEntity.Alise() + "." + key
 				if orderByValue == "ascNullsFirst" {
-					str := "if(isnull(" + fieldName + "),0,1) desc, " + fieldName + " asc"
-					argStrings = append(argStrings, str)
-				} else if orderByValue == "ascNullsLast" {
 					str := "if(isnull(" + fieldName + "),1,0) desc, " + fieldName + " asc"
 					argStrings = append(argStrings, str)
+				} else if orderByValue == "ascNullsLast" {
+					str := "if(isnull(" + fieldName + "),0,1) desc, " + fieldName + " asc"
+					argStrings = append(argStrings, str)
 				} else if orderByValue == "descNullsFirst" {
-					str := "if(isnull(" + fieldName + "),0,1) desc, " + fieldName + " desc"
+					str := "if(isnull(" + fieldName + "),1,0) desc, " + fieldName + " desc"
 					argStrings = append(argStrings, str)
 				} else if orderByValue == "descNullsLast" {
-					str := "if(isnull(" + fieldName + "),1,0) desc, " + fieldName + " desc"
+					str := "if(isnull(" + fieldName + "),0,1) desc, " + fieldName + " desc"
 					argStrings = append(argStrings, str)
 				} else {
 					argStrings = append(argStrings, argEntity.Alise()+"."+key+" "+orderByValue)
