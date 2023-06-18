@@ -1,10 +1,8 @@
 package meta
 
-import "github.com/codebdy/entify/shared"
-
 type UMLMeta struct {
 	//导出、导入文件时使用
-	Id           shared.ID      `json:"id"`
+	//Id           shared.ID      `json:"id"`
 	Classes      []ClassMeta    `json:"classes"`
 	Relations    []RelationMeta `json:"relations"`
 	Codes        []CodeMeta     `json:"codes"`
