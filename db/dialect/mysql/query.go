@@ -45,7 +45,12 @@ func (*MySQLBuilder) BuildFieldExp(fieldName string, fieldArgs map[string]interf
 			break
 		case shared.ARG_ISNULL:
 			if value == true {
-				queryStr = "ISNULL(" + fieldName + ")"
+				queryStr = fieldName + " IS NULL"
+			}
+			break
+		case shared.ARG_ISNOTNUL:
+			if value == true {
+				queryStr = fieldName + " IS NOT NULL"
 			}
 			break
 		case shared.ARG_LT:

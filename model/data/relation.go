@@ -2,8 +2,8 @@ package data
 
 import (
 	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify/shared"
 )
 
 type AssociationRef struct {
@@ -26,15 +26,15 @@ func NewAssociation(value map[string]interface{}, assoc *graph.Association) *Ass
 }
 
 func (r *AssociationRef) init(value map[string]interface{}) {
-	if value[consts.ARG_CLEAR] != nil {
-		r.Clear = value[consts.ARG_CLEAR].(bool)
+	if value[shared.ARG_CLEAR] != nil {
+		r.Clear = value[shared.ARG_CLEAR].(bool)
 	}
-	r.Deleted = r.convertToInstances(value[consts.ARG_DELETE])
-	r.Added = r.convertToInstances(value[consts.ARG_ADD])
-	r.Updated = r.convertToInstances(value[consts.ARG_UPDATE])
-	r.Synced = r.convertToInstances(value[consts.ARG_SYNC])
-	if value[consts.ARG_CASCADE] != nil {
-		r.isCascade = value[consts.ARG_CASCADE].(bool)
+	r.Deleted = r.convertToInstances(value[shared.ARG_DELETE])
+	r.Added = r.convertToInstances(value[shared.ARG_ADD])
+	r.Updated = r.convertToInstances(value[shared.ARG_UPDATE])
+	r.Synced = r.convertToInstances(value[shared.ARG_SYNC])
+	if value[shared.ARG_CASCADE] != nil {
+		r.isCascade = value[shared.ARG_CASCADE].(bool)
 	}
 }
 

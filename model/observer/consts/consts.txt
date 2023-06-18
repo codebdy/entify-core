@@ -110,22 +110,6 @@ const (
 	TYPE    string = "type"
 )
 
-/**
-* Meta实体用到的常量
-**/
-const (
-	META_ID          string = "id"
-	META_APP_UUID    string = "appUuid"
-	META_STATUS      string = "status"
-	META_CONTENT     string = "content"
-	META_PUBLISHEDAT string = "publishedAt"
-	META_CREATEDAT   string = "createdAt"
-	META_UPDATEDAT   string = "updatedAt"
-
-	META_CLASSES   string = "classes"
-	META_RELATIONS string = "relations"
-)
-
 const (
 	MEDIA_ENTITY_NAME = "Media"
 	MEDIA_UUID        = "MEDIA_ENTITY_UUID"
@@ -148,12 +132,6 @@ const (
 	DELETED_AT string = "deletedAt"
 )
 
-const (
-	BOOLEXP           string = "BoolExp"
-	ORDERBY           string = "OrderBy"
-	DISTINCTEXP       string = "DistinctExp"
-	MUTATION_RESPONSE string = "MutationResponse"
-)
 
 const ASSOCIATION_OWNER_ID = "owner__rx__id"
 

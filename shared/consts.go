@@ -2,7 +2,7 @@ package shared
 
 const TABLE_PREFIX = "a"
 const METAID = "metaId"
-
+const LOADERS = "loaders"
 const (
 	ONE        = "one"
 	QUERY      = "query"
@@ -47,15 +47,16 @@ const (
 
 //EQ("="), GTE(">="), GT(">"), LT("<"), LTE("<=");
 const (
-	ARG_EQ     string = "_eq"
-	ARG_GT     string = "_gt"
-	ARG_GTE    string = "_gte"
-	ARG_IN     string = "_in"
-	ARG_ISNULL string = "_isNull"
-	ARG_LT     string = "_lt"
-	ARG_LTE    string = "_lte"
-	ARG_NOTEQ  string = "_notEq"
-	ARG_NOTIN  string = "_notIn"
+	ARG_EQ       string = "_eq"
+	ARG_GT       string = "_gt"
+	ARG_GTE      string = "_gte"
+	ARG_IN       string = "_in"
+	ARG_ISNULL   string = "_isNull"
+	ARG_ISNOTNUL string = "_isNotNull"
+	ARG_LT       string = "_lt"
+	ARG_LTE      string = "_lte"
+	ARG_NOTEQ    string = "_notEq"
+	ARG_NOTIN    string = "_notIn"
 
 	ARG_ILIKE string = "_iLike"
 	// ARG_IREGEX     string = "_iregex"
@@ -114,5 +115,22 @@ const (
 	DISTINCTEXP       string = "DistinctExp"
 	MUTATION_RESPONSE string = "MutationResponse"
 )
+
+/**
+* Meta实体用到的常量
+**/
+const (
+	META_ID          string = "id"
+	META_APP_UUID    string = "appUuid"
+	META_STATUS      string = "status"
+	META_CONTENT     string = "content"
+	META_PUBLISHEDAT string = "publishedAt"
+	META_CREATEDAT   string = "createdAt"
+	META_UPDATEDAT   string = "updatedAt"
+
+	META_CLASSES   string = "classes"
+	META_RELATIONS string = "relations"
+)
+
 
 const ASSOCIATION_OWNER_ID = "owner__rx__id"

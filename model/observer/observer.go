@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/shared"
 )
 
 type ModelObserver interface {
@@ -27,7 +27,7 @@ func RemoveObserver(key string) {
 
 func EmitObjectPosted(object map[string]interface{}, entityName string, ctx context.Context) {
 	//newCtx := context.WithValue(context.Background(), consts.CONTEXT_VALUES, contexts.Values(ctx))
-	newCtx := context.WithValue(context.Background(), consts.LOADERS, ctx.Value(consts.LOADERS))
+	newCtx := context.WithValue(context.Background(), shared.LOADERS, ctx.Value(shared.LOADERS))
 	go func() {
 		ModelObservers.Range(func(key interface{}, value interface{}) bool {
 			value.(ModelObserver).ObjectPosted(object, entityName, newCtx)
