@@ -1,5 +1,7 @@
 package meta
 
+import "github.com/codebdy/minions-go/dsl"
+
 const (
 	QUERY    string = "query"
 	MUTATION string = "mutation"
@@ -14,14 +16,14 @@ type ArgMeta struct {
 }
 
 type MethodMeta struct {
-	Uuid        string    `json:"uuid"`
-	Name        string    `json:"name"`
-	Type        string    `json:"type"`
-	TypeUuid    string    `json:"typeUuid"`
-	TypeLabel   string    `json:"typeLabel"`
-	Args        []ArgMeta `json:"args"`
-	OperateType string    `json:"operateType"` //mutation or query
-	Description string    `json:"description"`
-	LogicMetas  string    `json:"logicMetas"`
-	LogicScript string    `json:"logicScript"`
+	Uuid        string            `json:"uuid"`
+	Name        string            `json:"name"`
+	Type        string            `json:"type"`
+	TypeUuid    string            `json:"typeUuid"`
+	TypeLabel   string            `json:"typeLabel"`
+	Args        []ArgMeta         `json:"args"`
+	OperateType string            `json:"operateType"` //mutation or query
+	Description string            `json:"description"`
+	LogicMeta   dsl.LogicFlowMeta `json:"logicMetas"`
+	LogicScript string            `json:"logicScript"`
 }

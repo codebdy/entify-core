@@ -7,6 +7,7 @@ const (
 	ONE        = "one"
 	QUERY      = "query"
 	MUTATION   = "mutation"
+	SUBMETHOD  = "subMethod"
 	AGGREGATE  = "aggregate"
 	LIST       = "list"
 	FIELDS     = "Fields"
@@ -131,6 +132,5 @@ const (
 	META_CLASSES   string = "classes"
 	META_RELATIONS string = "relations"
 )
-
 
 const ASSOCIATION_OWNER_ID = "owner__rx__id"
