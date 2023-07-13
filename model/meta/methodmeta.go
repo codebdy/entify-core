@@ -24,6 +24,6 @@ type MethodMeta struct {
 	Args        []ArgMeta         `json:"args"`
 	OperateType string            `json:"operateType"` //mutation or query
 	Description string            `json:"description"`
-	LogicMeta   dsl.LogicFlowMeta `json:"logicMetas"`
+	LogicMetas  dsl.LogicFlowMeta `json:"logicMetas"`
 	LogicScript string            `json:"logicScript"`
 }
