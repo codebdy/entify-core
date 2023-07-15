@@ -10,6 +10,6 @@ require (
 
 require github.com/go-sql-driver/mysql v1.7.0
 
-require github.com/codebdy/minions-go v0.0.2
+require github.com/codebdy/minions-go v0.1.0
 
-replace github.com/codebdy/minions-go v0.0.2 => ../minions-go
+//replace github.com/codebdy/minions-go v0.0.2 => ../minions-go
