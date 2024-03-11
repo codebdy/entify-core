@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func (b *MySQLBuilder) BuildDeleteSQL(id uint64, tableName string) string {

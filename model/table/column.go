@@ -1,6 +1,6 @@
 package table
 
-import "github.com/codebdy/entify/model/meta"
+import "github.com/codebdy/entify-core/model/meta"
 
 type Column struct {
 	meta.AttributeMeta

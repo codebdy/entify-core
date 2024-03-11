@@ -1,9 +1,9 @@
 package data
 
 import (
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/table"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/table"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type AssociationRef struct {

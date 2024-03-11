@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/db/dialect"
+	"github.com/codebdy/entify-core/model"
 )
 
 type Session struct {
@@ -27,7 +27,7 @@ func (s *Session) ClearTx() {
 	s.Dbx.ClearTx()
 }
 
-//use for sql join table
+// use for sql join table
 func (s *Session) CreateId() int {
 	s.idSeed++
 	return s.idSeed

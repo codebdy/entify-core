@@ -3,10 +3,10 @@ package orm
 import (
 	"log"
 
-	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/db/dialect"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type InsanceData = map[string]interface{}

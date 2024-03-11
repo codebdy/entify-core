@@ -1,11 +1,11 @@
 package dialect
 
 import (
-	"github.com/codebdy/entify/db/dialect/mysql"
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/db/dialect/mysql"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/table"
 )
 
 const (

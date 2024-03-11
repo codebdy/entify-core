@@ -5,9 +5,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type MySQLBuilder struct {

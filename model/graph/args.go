@@ -3,7 +3,7 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/shared"
 )
 
 const PREFIX_T string = "t"

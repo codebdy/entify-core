@@ -3,10 +3,10 @@ package orm
 import (
 	"log"
 
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/db/dialect"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/table"
 )
 
 func Migrage(d *model.Diff, dbConfig db.DbConfig) {

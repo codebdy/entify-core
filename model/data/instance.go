@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/model/table"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/model/table"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/google/uuid"
 )
 
@@ -85,13 +85,13 @@ func (ins *Instance) IsEmperty() bool {
 		(id != nil || ins.Id != 0)
 }
 
-//清空其它字段，保留ID跟关系，供二次保存使用
+// 清空其它字段，保留ID跟关系，供二次保存使用
 func (ins *Instance) Inserted(id uint64) {
 	ins.Id = id
 	ins.Fields = []*Field{}
 }
 
-//有ID也当插入来处理
+// 有ID也当插入来处理
 func (ins *Instance) AsInsert() {
 	ins.isInsert = true
 }

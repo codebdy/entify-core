@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/table"
 )
 
 func (b *MySQLBuilder) BuildInsertSQL(fields []*data.Field, table *table.Table) string {

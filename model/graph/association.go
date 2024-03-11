@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/model/table"
 )
 
 type Association struct {
@@ -81,7 +81,7 @@ func (a *Association) isNToN() bool {
 	return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_MANY
 }
 
-//单向关联
+// 单向关联
 func (a *Association) isOneWay() bool {
 	return a.Relation.RelationType != meta.ONE_WAY_ASSOCIATION
 }
@@ -138,11 +138,11 @@ func (a *Association) isOneWay() bool {
 // 		return true
 // 	}
 
-// 	if a.isNTo1() && !a.IsSource() && a.isOneWay() {
-// 		return true
-// 	}
-// 	return false
-// }
+//		if a.isNTo1() && !a.IsSource() && a.isOneWay() {
+//			return true
+//		}
+//		return false
+//	}
 func (a *Association) IsCombination() bool {
 	return a.IsSource() &&
 		(a.Relation.RelationType == meta.TWO_WAY_COMBINATION ||

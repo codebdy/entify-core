@@ -1,9 +1,9 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/shared"
-	"github.com/codebdy/entify/model/domain"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/model/domain"
+	"github.com/codebdy/entify-core/model/table"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type Entity struct {
@@ -26,12 +26,12 @@ func (e *Entity) GetHasOneName() string {
 	return shared.FirstUpper(shared.SET) + e.Name() + shared.HAS_ONE
 }
 
-//有同名接口
+// 有同名接口
 func (e *Entity) hasInterfaceWithSameName() bool {
 	return e.Domain.HasChildren()
 }
 
-//包含继承来的
+// 包含继承来的
 func (e *Entity) AllAttributes() []*Attribute {
 	attrs := []*Attribute{}
 	attrs = append(attrs, e.attributes...)

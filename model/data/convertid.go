@@ -3,7 +3,7 @@ package data
 import (
 	"strconv"
 
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func ConvertId(id interface{}) uint64 {

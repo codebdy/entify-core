@@ -1,7 +1,7 @@
 package graph
 
 import (
-	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify-core/model/domain"
 )
 
 type ThirdParty struct {

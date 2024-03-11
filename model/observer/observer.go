@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type ModelObserver interface {

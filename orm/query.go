@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/db/dialect"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type QueryResponse struct {

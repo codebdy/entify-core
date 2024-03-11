@@ -3,8 +3,8 @@ package mysql
 import (
 	"testing"
 
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/table"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/table"
 )
 
 func TestModifyTableName(t *testing.T) {

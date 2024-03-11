@@ -1,4 +1,4 @@
-module github.com/codebdy/entify
+module github.com/codebdy/entify-core
 
 go 1.18
 

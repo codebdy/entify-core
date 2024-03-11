@@ -2,11 +2,11 @@
 package entify
 
 import (
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/orm"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/orm"
+	"github.com/codebdy/entify-core/shared"
 	_ "github.com/go-sql-driver/mysql"
 )
 

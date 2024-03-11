@@ -5,10 +5,10 @@ import (
 	"log"
 	"strings"
 
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/model/table"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/model/table"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func (b *MySQLBuilder) BuildCreateTableSQL(table *table.Table) string {

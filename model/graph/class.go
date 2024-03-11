@@ -3,8 +3,8 @@ package graph
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/shared"
-	"github.com/codebdy/entify/model/domain"
+	"github.com/codebdy/entify-core/model/domain"
+	"github.com/codebdy/entify-core/shared"
 
 	"github.com/gertd/go-pluralize"
 )

@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/codebdy/entify/model/meta"
+import "github.com/codebdy/entify-core/model/meta"
 
 type Class struct {
 	Uuid          string

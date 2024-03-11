@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/db/dialect"
-	"github.com/codebdy/entify/model/data"
+	"github.com/codebdy/entify-core/db/dialect"
+	"github.com/codebdy/entify-core/model/data"
 )
 
 func (s *Session) SaveOne(entityName string, object map[string]interface{}) (uint64, error) {
@@ -43,7 +43,7 @@ func (s *Session) insertOne(instance *data.Instance) (uint64, error) {
 	return uint64(id), nil
 }
 
-//只保存属性，不保存关联
+// 只保存属性，不保存关联
 func (s *Session) insertOneBody(instance *data.Instance) (int64, error) {
 	sqlBuilder := dialect.GetSQLBuilder()
 	saveStr := sqlBuilder.BuildInsertSQL(instance.Fields, instance.Table())
@@ -82,7 +82,7 @@ func (s *Session) updateOne(instance *data.Instance) (uint64, error) {
 	return instance.Id, nil
 }
 
-//只保存属性，不保存关联
+// 只保存属性，不保存关联
 func (s *Session) updateOneBody(instance *data.Instance) error {
 	sqlBuilder := dialect.GetSQLBuilder()
 

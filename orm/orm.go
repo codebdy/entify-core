@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/model"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/model"
 )
 
 func DbString(cfg db.DbConfig) string {

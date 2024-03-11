@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 
-	"github.com/codebdy/entify/db"
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/db"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func makeFieldValues(fields []*data.Field) []interface{} {
