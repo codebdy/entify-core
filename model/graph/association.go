@@ -6,24 +6,26 @@ import (
 )
 
 type Association struct {
+	Name           string
 	Relation       *Relation
 	OwnerClassUuid string
 }
 
-func NewAssociation(r *Relation, ownerUuid string) *Association {
+func NewAssociation(name string, r *Relation, ownerUuid string) *Association {
 	return &Association{
+		Name:           name,
 		Relation:       r,
 		OwnerClassUuid: ownerUuid,
 	}
 }
 
-func (a *Association) Name() string {
-	if a.IsSource() {
-		return a.Relation.RoleOfTarget
-	} else {
-		return a.Relation.RoleOfSource
-	}
-}
+// func (a *Association) Name() string {
+// 	if a.IsSource() {
+// 		return a.Relation.RoleOfTarget
+// 	} else {
+// 		return a.Relation.RoleOfSource
+// 	}
+// }
 
 func (a *Association) Owner() *Entity {
 	if a.IsSource() {
@@ -154,11 +156,11 @@ func (a *Association) IsSource() bool {
 }
 
 func (a *Association) GetName() string {
-	return a.Name()
+	return a.Name
 }
 
 func (a *Association) Path() string {
-	return a.Owner().Domain.Name + "." + a.Name()
+	return a.Owner().Domain.Name + "." + a.Name
 }
 
 func (a *Association) Table() *table.Table {

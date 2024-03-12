@@ -36,7 +36,7 @@ func typeFromAssociation(associ *Association, ider Ider) *ArgEntity {
 
 func (a *ArgEntity) GetAssociation(name string) *ArgAssociation {
 	for i := range a.Associations {
-		if a.Associations[i].Association.Name() == name {
+		if a.Associations[i].Association.Name == name {
 			return a.Associations[i]
 		}
 	}
@@ -45,13 +45,13 @@ func (a *ArgEntity) GetAssociation(name string) *ArgAssociation {
 
 func (a *ArgEntity) GetWithMakeAssociation(name string, ider Ider) *ArgAssociation {
 	for i := range a.Associations {
-		if a.Associations[i].Association.Name() == name {
+		if a.Associations[i].Association.Name == name {
 			return a.Associations[i]
 		}
 	}
 	allAssociations := a.Entity.associations
 	for i := range allAssociations {
-		if allAssociations[i].Name() == name {
+		if allAssociations[i].Name == name {
 			asso := &ArgAssociation{
 				Association:   allAssociations[i],
 				TypeArgEntity: typeFromAssociation(allAssociations[i], ider),

@@ -70,7 +70,7 @@ func NewInstance(object map[string]interface{}, entity *graph.Entity) *Instance 
 	allAssociation := entity.Associations()
 	for i := range allAssociation {
 		asso := allAssociation[i]
-		value := object[asso.Name()]
+		value := object[asso.Name]
 		if value != nil {
 			ref := NewAssociation(value.(map[string]interface{}), asso)
 			instance.Associations = append(instance.Associations, ref)

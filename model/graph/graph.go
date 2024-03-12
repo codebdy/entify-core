@@ -156,11 +156,11 @@ func (m *Model) makeAssociations(relation *Relation) {
 
 	targetEntity := relation.TargetEntity
 
-	sourceEntity.AddAssociation(NewAssociation(relation, sourceEntity.Uuid()))
+	sourceEntity.AddAssociation(NewAssociation(relation.RoleOfTarget, relation, sourceEntity.Uuid()))
 	if relation.RelationType == meta.TWO_WAY_AGGREGATION ||
 		relation.RelationType == meta.TWO_WAY_ASSOCIATION ||
 		relation.RelationType == meta.TWO_WAY_COMBINATION {
-		targetEntity.AddAssociation(NewAssociation(relation, targetEntity.Uuid()))
+		targetEntity.AddAssociation(NewAssociation(relation.RoleOfSource, relation, targetEntity.Uuid()))
 	}
 }
 

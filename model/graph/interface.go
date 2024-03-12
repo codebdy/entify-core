@@ -34,7 +34,7 @@ func (f *Interface) AllAssociations() []*Association {
 	for i := range f.Parents {
 		for j := range f.Parents[i].associations {
 			asso := f.Parents[i].associations[j]
-			if findAssociation(asso.Name(), associas) == nil {
+			if findAssociation(asso.Name, associas) == nil {
 				associas = append(associas, asso)
 			}
 		}
@@ -45,7 +45,7 @@ func (f *Interface) AllAssociations() []*Association {
 func (f *Interface) GetAssociationByName(name string) *Association {
 	associations := f.AllAssociations()
 	for i := range associations {
-		if associations[i].Name() == name {
+		if associations[i].Name == name {
 			return associations[i]
 		}
 	}

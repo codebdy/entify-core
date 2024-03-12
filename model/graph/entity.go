@@ -64,7 +64,7 @@ func (e *Entity) GetAssociationByName(name string) *Association {
 	//associations := e.AllAssociations()
 	associations := e.associations
 	for i := range associations {
-		if associations[i].Name() == name {
+		if associations[i].Name == name {
 			return associations[i]
 		}
 	}
@@ -107,7 +107,7 @@ func findAttribute(name string, attrs []*Attribute) *Attribute {
 
 func findAssociation(name string, assos []*Association) *Association {
 	for i := range assos {
-		if assos[i].Name() == name {
+		if assos[i].Name == name {
 			return assos[i]
 		}
 	}
