@@ -152,7 +152,7 @@ func (a *Association) IsCombination() bool {
 }
 
 func (a *Association) IsSource() bool {
-	return a.Relation.RoleOfSource == a.Name
+	return a.Relation.RoleOfTarget == a.Name
 }
 
 func (a *Association) GetName() string {
