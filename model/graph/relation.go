@@ -60,3 +60,11 @@ func NewRelation(
 
 	return relation
 }
+
+func (r *Relation) SourceColumnName() string {
+	return r.RoleOfTarget + "_id"
+}
+
+func (r *Relation) TargetColumnName() string {
+	return r.RoleOfSource + "_id"
+}

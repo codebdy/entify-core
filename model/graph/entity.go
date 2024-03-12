@@ -27,9 +27,9 @@ func (e *Entity) GetHasOneName() string {
 }
 
 // 有同名接口
-func (e *Entity) hasInterfaceWithSameName() bool {
-	return e.Domain.HasChildren()
-}
+// func (e *Entity) hasInterfaceWithSameName() bool {
+// 	return e.Domain.HasChildren()
+// }
 
 // 包含继承来的
 func (e *Entity) AllAttributes() []*Attribute {

@@ -57,34 +57,34 @@ func (a *Association) IsArray() bool {
 	}
 }
 
-func (a *Association) is1To1() bool {
-	return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_ONE
-}
+// func (a *Association) is1To1() bool {
+// 	return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_ONE
+// }
 
-func (a *Association) is1ToN() bool {
-	if a.IsSource() {
-		return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_MANY
-	} else {
-		return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_ONE
-	}
-}
+// func (a *Association) is1ToN() bool {
+// 	if a.IsSource() {
+// 		return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_MANY
+// 	} else {
+// 		return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_ONE
+// 	}
+// }
 
-func (a *Association) isNTo1() bool {
-	if !a.IsSource() {
-		return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_MANY
-	} else {
-		return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_ONE
-	}
-}
+// func (a *Association) isNTo1() bool {
+// 	if !a.IsSource() {
+// 		return a.Relation.SourceMutiplicity == meta.ZERO_ONE && a.Relation.TargetMultiplicity == meta.ZERO_MANY
+// 	} else {
+// 		return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_ONE
+// 	}
+// }
 
-func (a *Association) isNToN() bool {
-	return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_MANY
-}
+// func (a *Association) isNToN() bool {
+// 	return a.Relation.SourceMutiplicity == meta.ZERO_MANY && a.Relation.TargetMultiplicity == meta.ZERO_MANY
+// }
 
-// 单向关联
-func (a *Association) isOneWay() bool {
-	return a.Relation.RelationType != meta.ONE_WAY_ASSOCIATION
-}
+// // 单向关联
+// func (a *Association) isOneWay() bool {
+// 	return a.Relation.RelationType != meta.ONE_WAY_ASSOCIATION
+// }
 
 //关系存本方
 // func (a *Association) IsColumn() bool {
@@ -168,7 +168,7 @@ func (a *Association) Table() *table.Table {
 func (r *Association) SourceColumn() *table.Column {
 	for i := range r.Relation.Table.Columns {
 		column := r.Relation.Table.Columns[i]
-		if column.Name == r.Relation.SourceEntity.TableName() {
+		if column.Name == r.Relation.SourceColumnName() {
 			return column
 		}
 	}
@@ -178,7 +178,7 @@ func (r *Association) SourceColumn() *table.Column {
 func (r *Association) TargetColumn() *table.Column {
 	for i := range r.Relation.Table.Columns {
 		column := r.Relation.Table.Columns[i]
-		if column.Name == r.Relation.TargetEntity.TableName() {
+		if column.Name == r.Relation.TargetColumnName() {
 			return column
 		}
 	}

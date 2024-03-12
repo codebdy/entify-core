@@ -52,7 +52,7 @@ func NewRelationTable(relation *Relation) *table.Table {
 				AttributeMeta: meta.AttributeMeta{
 					Type:  meta.ID,
 					Uuid:  relation.SourceEntity.Uuid() + relation.Uuid,
-					Name:  relation.SourceEntity.TableName(),
+					Name:  relation.SourceColumnName(),
 					Index: true,
 				},
 			},
@@ -60,7 +60,7 @@ func NewRelationTable(relation *Relation) *table.Table {
 				AttributeMeta: meta.AttributeMeta{
 					Type:  meta.ID,
 					Uuid:  relation.TargetEntity.Uuid() + relation.Uuid,
-					Name:  relation.TargetEntity.TableName(),
+					Name:  relation.TargetColumnName(),
 					Index: true,
 				},
 			},
