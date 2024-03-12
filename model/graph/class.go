@@ -5,8 +5,6 @@ import (
 
 	"github.com/codebdy/entify-core/model/domain"
 	"github.com/codebdy/entify-core/shared"
-
-	"github.com/gertd/go-pluralize"
 )
 
 type Class struct {
@@ -60,9 +58,8 @@ func (c *Class) IsSoftDelete() bool {
 	return c.Domain.SoftDelete
 }
 
-func (c *Class) QueryName() string {
-	pluralize := pluralize.NewClient()
-	return shared.FirstLower(pluralize.Plural(c.Name()))
+func (c *Class) QueryListName() string {
+	return shared.FirstLower(c.Name() + "List")
 }
 
 func (c *Class) QueryOneName() string {
