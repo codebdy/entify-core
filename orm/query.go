@@ -227,8 +227,8 @@ func (s *Session) BatchRealAssociations(
 	queryStr := builder.BuildBatchAssociationBodySQL(argEntity,
 		typeEntity.AllAttributes(),
 		association.Relation.Table.Name,
-		association.Owner().TableName(),
-		association.TypeEntity().TableName(),
+		association.OwnerColumn().Name,
+		association.TypeColumn().Name,
 		ids,
 	)
 

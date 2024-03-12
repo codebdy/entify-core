@@ -152,7 +152,7 @@ func (a *Association) IsCombination() bool {
 }
 
 func (a *Association) IsSource() bool {
-	return a.Relation.SourceEntity.Uuid() == a.OwnerClassUuid
+	return a.Relation.RoleOfSource == a.Name
 }
 
 func (a *Association) GetName() string {
