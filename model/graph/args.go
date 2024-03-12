@@ -100,7 +100,6 @@ func buildWhereEntity(argEntity *ArgEntity, where QueryArg, ider Ider) {
 			if subWhere, ok := value.(QueryArg); ok {
 				buildWhereEntity(argEntity, subWhere, ider)
 			}
-			break
 		case shared.ARG_AND, shared.ARG_OR:
 			args := []QueryArg{}
 			if args2, ok := value.([]QueryArg); ok {
@@ -116,7 +115,6 @@ func buildWhereEntity(argEntity *ArgEntity, where QueryArg, ider Ider) {
 				buildWhereEntity(argEntity, subWhere, ider)
 			}
 
-			break
 		default:
 			association := argEntity.Entity.GetAssociationByName(key)
 			if association != nil {
@@ -125,7 +123,6 @@ func buildWhereEntity(argEntity *ArgEntity, where QueryArg, ider Ider) {
 					buildWhereEntity(argAssociation.TypeArgEntity, subWhere, ider)
 				}
 			}
-			break
 		}
 	}
 }
