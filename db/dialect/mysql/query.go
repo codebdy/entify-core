@@ -21,15 +21,12 @@ func (*MySQLBuilder) BuildFieldExp(fieldName string, fieldArgs map[string]interf
 		case shared.ARG_EQ:
 			queryStr = fieldName + "= ?"
 			params = append(params, value)
-			break
 		case shared.ARG_GT:
 			queryStr = fieldName + "> ?"
 			params = append(params, value)
-			break
 		case shared.ARG_GTE:
 			queryStr = fieldName + ">= ?"
 			params = append(params, value)
-			break
 		case shared.ARG_IN:
 			values := value.([]interface{})
 			placeHolders := []string{}
@@ -42,29 +39,23 @@ func (*MySQLBuilder) BuildFieldExp(fieldName string, fieldArgs map[string]interf
 			} else {
 				queryStr = " false "
 			}
-			break
 		case shared.ARG_ISNULL:
 			if value == true {
 				queryStr = fieldName + " IS NULL"
 			}
-			break
 		case shared.ARG_ISNOTNUL:
 			if value == true {
 				queryStr = fieldName + " IS NOT NULL"
 			}
-			break
 		case shared.ARG_LT:
 			queryStr = fieldName + "< ?"
 			params = append(params, value)
-			break
 		case shared.ARG_LTE:
 			queryStr = fieldName + "<= ?"
 			params = append(params, value)
-			break
 		case shared.ARG_NOTEQ:
 			queryStr = fieldName + "<> ?"
 			params = append(params, value)
-			break
 		case shared.ARG_NOTIN:
 			values := value.([]string)
 			placeHolders := []string{}
@@ -77,27 +68,21 @@ func (*MySQLBuilder) BuildFieldExp(fieldName string, fieldArgs map[string]interf
 			} else {
 				queryStr = " true "
 			}
-			break
 		case shared.ARG_ILIKE:
 			queryStr = fieldName + " LIKE ?"
 			params = append(params, value)
-			break
 		case shared.ARG_LIKE:
 			queryStr = fieldName + " LIKE BINARY ?"
 			params = append(params, value)
-			break
 		case shared.ARG_NOTILIKE:
 			queryStr = fieldName + " NOT LIKE ?"
 			params = append(params, value)
-			break
 		case shared.ARG_NOTLIKE:
 			queryStr = fieldName + " NOT LIKE BINARY ?"
 			params = append(params, value)
-			break
 		case shared.ARG_NOTREGEX:
 			queryStr = fieldName + " NOT REGEXP ?"
 			params = append(params, value)
-			break
 		// case shared.ARG_NOTSIMILAR:
 		// 	queryStr = fieldName + " SIMILAR "
 		// 	params = append(params, value)
@@ -105,7 +90,6 @@ func (*MySQLBuilder) BuildFieldExp(fieldName string, fieldArgs map[string]interf
 		case shared.ARG_REGEX:
 			queryStr = fieldName + " REGEXP "
 			params = append(params, value)
-			break
 		default:
 			panic("Can not find token:" + key)
 		}
@@ -132,9 +116,7 @@ func (b *MySQLBuilder) BuildBoolExp(argEntity *graph.ArgEntity, where map[string
 				querys = append(querys, andStr)
 				params = append(params, andParam...)
 			}
-			break
 		case shared.ARG_NOT:
-			break
 		case shared.ARG_OR:
 			ors, ok := value.([]interface{})
 			if !ok {
@@ -150,7 +132,6 @@ func (b *MySQLBuilder) BuildBoolExp(argEntity *graph.ArgEntity, where map[string
 				params = append(params, andParam...)
 			}
 			querys = append(querys, strings.Join(orQuerys, " OR "))
-			break
 		default:
 			asso := argEntity.Entity.GetAssociationByName(key)
 			//如果不是关联
@@ -192,10 +173,10 @@ func buildArgAssociation(argAssociation *graph.ArgAssociation, owner *graph.ArgE
 			argAssociation.Association.Relation.Table.Name,
 			povitTableAlias,
 			owner.Alise()+"."+shared.ID_NAME,
-			povitTableAlias+"."+owner.Entity.Table.Name,
+			povitTableAlias+"."+argAssociation.Association.OwnerColumn().Name,
 			typeEntity.Entity.TableName(),
 			typeEntity.Alise(),
-			povitTableAlias+"."+typeEntity.Entity.Table.Name,
+			povitTableAlias+"."+argAssociation.Association.TypeColumn().Name,
 			typeEntity.Alise()+"."+shared.ID_NAME,
 		)
 

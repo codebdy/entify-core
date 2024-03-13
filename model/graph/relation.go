@@ -62,9 +62,9 @@ func NewRelation(
 }
 
 func (r *Relation) SourceColumnName() string {
-	return r.RoleOfTarget + "_id"
+	return r.RoleOfSource + "_id"
 }
 
 func (r *Relation) TargetColumnName() string {
-	return r.RoleOfSource + "_id"
+	return r.RoleOfTarget + "_id"
 }
