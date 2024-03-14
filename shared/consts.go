@@ -46,18 +46,18 @@ const (
 	ARG_OR  string = "_or"
 )
 
-//EQ("="), GTE(">="), GT(">"), LT("<"), LTE("<=");
+// EQ("="), GTE(">="), GT(">"), LT("<"), LTE("<=");
 const (
-	ARG_EQ       string = "_eq"
-	ARG_GT       string = "_gt"
-	ARG_GTE      string = "_gte"
-	ARG_IN       string = "_in"
-	ARG_ISNULL   string = "_isNull"
-	ARG_ISNOTNUL string = "_isNotNull"
-	ARG_LT       string = "_lt"
-	ARG_LTE      string = "_lte"
-	ARG_NOTEQ    string = "_notEq"
-	ARG_NOTIN    string = "_notIn"
+	ARG_EQ        string = "_eq"
+	ARG_GT        string = "_gt"
+	ARG_GTE       string = "_gte"
+	ARG_IN        string = "_in"
+	ARG_ISNULL    string = "_isNull"
+	ARG_ISNOTNULL string = "_isNotNull"
+	ARG_LT        string = "_lt"
+	ARG_LTE       string = "_lte"
+	ARG_NOTEQ     string = "_notEq"
+	ARG_NOTIN     string = "_notIn"
 
 	ARG_ILIKE string = "_iLike"
 	// ARG_IREGEX     string = "_iregex"
