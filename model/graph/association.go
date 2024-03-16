@@ -151,6 +151,7 @@ func (a *Association) IsCombination() bool {
 			a.Relation.RelationType == meta.ONE_WAY_COMBINATION)
 }
 
+//UML的Role Name存在关系的对方，而不是本方
 func (a *Association) IsSource() bool {
 	return a.Relation.RoleOfTarget == a.Name
 }
